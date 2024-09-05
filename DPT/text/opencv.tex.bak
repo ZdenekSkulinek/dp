@@ -1,0 +1,155 @@
+\chapter{Knihovna openCV}
+\label{kap:opencv}
+
+\section{Úvod do openCV}
+OpenCV (Open Source Computer Vision Library) dostupná na http://opencv.org \cite{opencv} je open-source BSD-licencovaná knihovna, která zahrnuje několik set algoritmů z počítačového vidění. 
+\\
+OpenCV má modulární strukturu, jsou v ní zejména moduly uvedené níže:
+
+\begin{itemize}
+\item \emph{core} - Základní datové struktury a funkce, zejména pak třída \classname{Mat}.
+\item \emph{imgproc} - Filtrace, geometrické transformace a barevné konverze.
+\item \emph{video} - Výpočet rozdílu snímků a detekce pohybu.
+\item \emph{calib3d} - Základní víceobrazové geometrické transformace.
+\item \emph{features2D} - Detektory charakteristických rysů a jejich srovnávače .
+\item \emph{objdetect} - Detekce objektů a jejich zařazení do tříd (lidé, oči, obličeje, auta...).
+\item \emph{highgui} - Jednoduché uživatelské rozhraní a a interface pro zachytávání obrazu, obrazové a video kodeky. 
+\item \emph{gpu} - GPU akcelerované algoritmy ostatních zde uvedených modulů.
+\item \emph{ a další...}
+\end{itemize}
+
+
+\section{Základní API}
+
+
+Knihovna open cv je umístěna ve jmenném prostoru \classname{cv}.
+Je to velmi důležité, protože řada jmen funkcí může být stejná jako u jiných knihoven.
+Asi nejdůležitější třídou je třída \classname{Mat} reprezentující obecnou matici, se kterou se pracuje téměř stejně jako v programech \srcfilename{matlab}, \srcfilename{octave}. Je tu ale jeden zásadní rozdíl. Třída nemá svoje data, přesněji, několik instancí třídy \classname{Mat} 
+může sdílet stejná data. Je to výhodné, protože ve většině případů se tak zamezí kopírování mnoha bytů. Pokud tedy potřebujeme skutečně Matici zkopírovat, použijeme její členskou metodu \functionname{clone}.
+Je třeba upřesnit, že \classname{Mat} může být i jen určitá oblast jiné \classname{Mat} a přesto sdílejí společná data. \classname{Mat} definuje možnost mít jako data většinu základních typů, samozřejmě jako \classname{unsigned char}, \classname{signed char}, \classname{usigned short}, \classname{float}, \classname{double}, a  další. Umí samozřejmě několik kanálů. Uvedu krátký příklad:
+
+
+\begin{Verbatim}
+// vytvoří  8MB velkou matici
+Mat A(1000, 1000, CV_64F);
+
+// vytvoří jinou hlavičku pro stejná data
+Mat B = A;
+\end{Verbatim}
+
+
+\begin{Verbatim}
+// vytvoří jinou hlavičku, jako třetí řádek matice A.
+// žádná data se nekopírují
+Mat C = B.row(3);
+\end{Verbatim}
+
+
+\begin{Verbatim}
+// teď vytvoří samostatnou kopii matice B
+Mat D = B.clone();
+\end{Verbatim}
+
+\begin{Verbatim}
+// zkopíruje 5tý řádek matice B do matice C,
+// matice C nyní bude mít stejná data jako matice A.
+B.row(5).copyTo(C);
+\end{Verbatim}
+
+
+\begin{Verbatim}
+// teď A a D sdílí stejná data. Matice B a C ale stále ukazují na data
+// staré modifikované matice A
+A = D;
+\end{Verbatim}
+
+
+\begin{Verbatim}
+// nyní smažeme referenci na data u matice B. Matice C
+// ale stále ukazuje na data staré modifikované matice
+// A. A to přesto, že ukazuje jen na jeden osamocený řádek těchto dat.
+B.release();;
+\end{Verbatim}
+
+
+\begin{Verbatim}
+// nakonec, vytvořením úplné kopie matice C zaručíme,
+// že původní data budou dealokované, protože
+// žádné matice na ně již nebude držet odkaz.
+C = C.clone();
+\end{Verbatim}
+ 
+
+Matice se dá snadno vypsat, stačí jí poslat do výstupního streamu.
+
+\begin{Verbatim}
+cout<<R;
+
+//nebo
+
+cout << "R (python)  = " << endl << format(R,"python") << endl << endl;
+\end{Verbatim}
+
+%\section{První projekt}
+%
+%Tento projekt, takový \uv{Hello openCV world} jsem si vypůjčil ze
+%stránek \url{openCV.org}. Demonstruje, že začít projekt s openCV je skutečně jednoduché. Jsou  v něm použity pouhé 4 funkce: načtení obrázku, jehož jméno
+%je dáno jako parametr z~příkazové řádky(\functionname{imread}), potom vytvoření okna (\functionname{namedWindow}) následně zobrazení obrázku v okně (\functionname{imshow}) a nakonec jen čekání na stisk klávesy (\functionname{waitKey}).
+%\\
+%\srcfilename{Main.cpp}:
+%
+%\begin{Verbatim}
+%#include <stdio.h>
+%#include <opencv2/opencv.hpp>
+%
+%using namespace cv;
+%
+%int main(int argc, char** argv )
+%{
+%    if ( argc != 2 )
+%    {
+%        printf("usage: DisplayImage.out <Image_Path>\n");
+%        return -1;
+%    }
+%
+%    Mat image;
+%    image = imread( argv[1], 1 );
+%
+%    if ( !image.data )
+%    {
+%        printf("No image data \n");
+%        return -1;
+%    }
+%    namedWindow("Display Image", WINDOW_AUTOSIZE );
+%    imshow("Display Image", image);
+%
+%    waitKey(0);
+%
+%    return 0;
+%}
+%\end{Verbatim}
+%
+%Pro překlad je třeba vytvořit si následující soubor:	
+%\\
+%\srcfilename{CMakeLists.txt}
+%
+%\begin{Verbatim}
+%
+%cmake_minimum_required(VERSION 2.8)
+%project( test02 )
+%find_package( OpenCV REQUIRED )
+%add_executable( dist/Debug/GNU-Linux/test02 main.cpp )
+%target_link_libraries( dist/Debug/GNU-Linux/test02 \${OpenCV_LIBS} )
+%\end{Verbatim}
+%\label{sec:compilerules}
+%\noindent
+%kde test02 je jméno projektu a výstupního spustitelného souboru.
+%Pak lze přidat výše uvedený zápis  kamkoliv do projektu.
+%Spuštění provádímě jako každého jiného programu, s tím rozdílem, že je třeba nejdříve projekt
+%přeložit příkazem \srcfilename{cmake}.
+%
+%\begin{Verbatim}
+%cmake .
+%make
+%dist/Debug/GNU-Linux/test02 lena.jpg
+%\end{Verbatim}

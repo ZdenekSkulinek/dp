@@ -1,0 +1,174 @@
+
+\begin{eqnarray}
+\left[
+\begin{array}{c}
+v_{1}[n+1] \\
+v_{2}[n+1]
+\end{array} 
+\right]
+& = &
+\left[
+\begin{array}{cc}
+0 & 1 \\
+-1 & 2\cos(2\pi k/N) \\
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+v_{1}[n] \\
+v_{2}[n]
+\end{array}
+\right]
++
+\left[
+\begin{array}{cc}
+0\\
+1
+\end{array}
+\right]
+x[n]
+\\
+\left[
+\begin{array}{c}
+v_{1}[n+2] \\
+v_{2}[n+2]
+\end{array} 
+\right]
+ & = &
+\left[
+\begin{array}{cc}
+0 & 1 \\
+-1 & 2\cos(2\pi k/N) \\
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+v_{1}[n+1] \\
+v_{2}[n+1]
+\end{array}
+\right]
++
+\left[
+\begin{array}{cc}
+0\\
+1
+\end{array}
+\right]
+x[n+1] \\
+\left[
+\begin{array}{c}
+v_{1}[n+2] \\
+v_{2}[n+2]
+\end{array} 
+\right]
+ & = &
+\left[
+\begin{array}{cc}
+0 & 1 \\
+-1 &2\cos(2\pi k/N) \\
+\end{array}
+\right]
+\left[
+\begin{array}{cc}
+0 & 1 \\
+-1 & 2\cos(2\pi k/N) \\
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+v_{1}[n] \\
+v_{2}[n]
+\end{array}
+\right]
++
+\left[
+\begin{array}{cc}
+0 & 1 \\
+-1 & 2\cos(2\pi k/N)  \\
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+0\\
+1
+\end{array}
+\right]
+x[n]
++
+\left[
+\begin{array}{cc}
+0\\
+1
+\end{array}
+\right]
+x[n+1]
+\\
+\left[
+\begin{array}{c}
+v_{1}[n+2] \\
+v_{2}[n+2]
+\end{array} 
+\right]
+ & = &
+\left[
+\begin{array}{cc}
+-1 & 2\cos(2\pi k/N)\\
+-2\cos(2\pi k/N) & 4\cos^2(2\pi k/N)-1 \\
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+v_{1}[n] \\
+v_{2}[n]
+\end{array}
+\right]
++
+\left[
+\begin{array}{c}
+1 \\
+2\cos(2\pi k/N) \\
+\end{array}
+\right]
+x[n]
++
+\left[
+\begin{array}{cc}
+0\\
+1
+\end{array}
+\right]
+x[n+1]
+\\
+\left[
+\begin{array}{c}
+v_{1}[n+2] \\
+v_{2}[n+2]
+\end{array} 
+\right]
+ & = &
+\left[
+\begin{array}{cc}
+-1 & 2\cos(2\pi k/N)\\
+-2\cos(2\pi k/N) & 4\cos^2(2\pi k/N)-1 \\
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+v_{1}[n] \\
+v_{2}[n]
+\end{array}
+\right]
++
+\left[
+\begin{array}{cc}
+1 & 0\\
+2\cos(2\pi k/N) & 1
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+x[n] \\
+x[n+1]
+\end{array}
+\right]
+\end{eqnarray}

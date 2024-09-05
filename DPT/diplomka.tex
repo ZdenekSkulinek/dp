@@ -1,0 +1,76 @@
+\documentclass[twoside,12pt,fleqn]{report}% dvoustranný tisk
+%\documentclass[12pt]{report}% jednostranný tisk
+% všechny soubory jsou v utf-8. 
+	\usepackage{ucs}% pro kódování UTF-8
+	\usepackage[utf8x]{inputenc}% kódování vstupních souborů je utf-8
+	\PrerenderUnicode{ěščřžýáíéĚŠČŘŽÝÁÍÉďťňĎŤŇůúÚóÓ} %predkresleni diakritiky, mozno pridat/ubrat znaky podle potreby
+% pokud si je překódujete např do windows 1250 použijte místo předchozích tří řádků následující:
+%\usepackage[cp1250]{inputenc}% kódování vstupních souborů
+							                  
+
+\usepackage[czech]{babel}% čeština
+%\usepackage[slovak]{babel}% slovenština
+\usepackage[IL2]{fontenc}% csr fonty (pokud jsou nainstalovány česká postscriptová mísma)
+%\usepackage[T1]{fontenc}% EC fonty - háčky a čárky jsou k písmenkům připojovány - nehezké
+
+
+\usepackage[]{diplomka}
+\usepackage[]{VSKP} % Sablona dle smernice rektora
+\input{VSKP} % Uvodni desky atd dle smernice rektora
+\splithyphens% při rozdělování slov se spojovníkem opakuj spojovník
+\ifx\pdfcompresslevel\undefined
+   \usepackage{graphicx}
+   \DeclareGraphicsExtensions{.bmp,.eps,.png}
+\else
+   \usepackage[pdftitle={\typpracetxt},
+            pdfauthor={\autortxt},
+            pdftex=true,
+            %bookmarks=true,
+            linkcolor=blue,
+            colorlinks=true,
+            breaklinks=true,
+            a4paper]{hyperref}
+   \usepackage[pdftex]{graphicx}
+   \DeclareGraphicsExtensions{.png,.pdf}
+\fi
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{alize} %moje styly
+
+%\usepackage{listings}
+%\lstset {breaklines=true}
+\usepackage{fancyvrb}
+
+\usepackage{rotating}
+\usepackage{multirow}
+
+
+\begin{document}
+
+\titul% vytiskne titul práce
+\abstrakty% vytiskne stránku s abstrakty
+
+
+\prohlaseni{Prohlašuji, že jsem to všechno opsal a vlastními chybami opatřil.}% prohlášení,
+\podekovani{Děkuji všem, kteří mi pomohli okopírovat to, co jsem potom opsal.}% poděkování, nepovinné
+
+% vlastní práce
+\obsah% vytiskne obsah
+
+%
+%  vlastni text
+%
+\input{Uvod}% nutné
+%
+% sem vlastni opsany text, možno vložit více souborů (nejlépe pro každou kapitolu zvláštní soubor)
+\input{text/goertzel}
+\input{text/moznosti}
+\input{text/opencv}
+
+%
+%\input{Zaver}% nutné
+\input{Literatura}% nutné
+\input{text/instalation}
+\input{SeznamZkratek}% nutné
+\input{SeznamPriloh}% není povinné
+\end{document}

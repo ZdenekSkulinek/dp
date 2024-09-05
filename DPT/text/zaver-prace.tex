@@ -1,0 +1,13 @@
+\chapter{Závěr}
+
+V kapitole \uv{Možnosti paralelizace} (\ref{kap:moznostireseni}) bylo ukázáno, že výpočet se dá za cenu mírného zesložitění rozdělit na více procesorových jednotek a 
+následně mezivýsledky spojovat. Byly vybrány knihovny pro vývoj aplikace. Po bližším zkoumání několika možných knihoven byly použity knihovny \emph{OpenCL}, \emph{OpenAL}, \emph{OpenGL}, \emph{Standardní C++} a \emph{Qt}.
+
+
+Vytvořená aplikace \emph{Sound Analyzer} zobrazuje spektrum ze vstupního zvukového zařízení nebo přehrávaného zvukového signálu. Je realtimeová a multiplatformní. Její funkčnost je možné zkontrolovat zejména proti funkci \emph{FFT} \emph{matlabu} tak, že se libovolný signál v \emph{matlabu} uloží do souboru, nad tímto souborem se provede funkce
+\uv{process mat file} programem \emph{Sound Analyzaror} a výsledný soubor se načte zpět do prostředí \emph{matlab}.
+
+
+Lze říci, že paralelizace se vyplatila. V kapitole \ref{kap:measurement} jsem ukázal, že výpočet 256krát delší zátěže trvá jen o cca 0,25\% déle.
+
+Praktickým ověřením funkcionality programu bylo měření výkonu aplikace využívající \emph{GPU} ve srovnání se stejnými výpočty na hlavním procesoru. Bylo zjištěno, že to funguje, respektive, že \emph{GPU} hlavnímu procesoru skutečně ulehčí. Je ale třeba \emph{GPU} hodně zatížit, což  prakticky znamená rozdělit úlohu na méně výpočetních jednotek s nějakou komplexnější funkcionalitou nebo prováděním nějakého cyklu. Jinak převáží vyšší režie, kterou outsourcing z \emph{CPU} na \emph{GPU} přináší. Větší počet výpočetních jednotek lze s výhodou využít například pro počítání většího objemu dat, tedy více kmitočtu ve více kanálech. 

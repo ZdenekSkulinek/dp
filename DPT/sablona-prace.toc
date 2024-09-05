@@ -1,0 +1,197 @@
+\select@language {czech}
+\contentsline {chapter}{\IeC {\'U}vod}{13}{section*.5}
+\contentsline {chapter}{\numberline {1}Goertzel\IeC {\r u}v algoritmus}{14}{chapter.6}
+\contentsline {section}{\numberline {1.1}Diskr\IeC {\'e}tn\IeC {\'\i } Fourierova \IeC {\v r}ada}{14}{section.7}
+\contentsline {section}{\numberline {1.2}Diskr\IeC {\'e}tn\IeC {\'\i } Fourierova transformace - DFT}{14}{section.9}
+\contentsline {section}{\numberline {1.3}Goertzel\IeC {\r u}v algoritmus}{14}{section.11}
+\contentsline {section}{\numberline {1.4}Odvozen\IeC {\'\i } Goertzelova algoritmu}{15}{section.14}
+\contentsline {chapter}{\numberline {2}Mo\IeC {\v z}nosti paralelizace}{19}{chapter.26}
+\contentsline {section}{\numberline {2.1}Rozd\IeC {\v e}len\IeC {\'\i } na $N$-\IeC {\v c}\IeC {\'a}st\IeC {\'\i } a jejich pr\IeC {\r u}m\IeC {\v e}rov\IeC {\'a}n\IeC {\'\i }}{19}{section.27}
+\contentsline {section}{\numberline {2.2}Variace stavov\IeC {\'e} prom\IeC {\v e}nn\IeC {\'e}}{19}{section.28}
+\contentsline {section}{\numberline {2.3}Maticov\IeC {\'e} operace}{26}{section.48}
+\contentsline {section}{\numberline {2.4}Po\IeC {\v c}\IeC {\'\i }t\IeC {\'a}n\IeC {\'\i } hodnot na v\IeC {\'\i }ce kmito\IeC {\v c}tech sou\IeC {\v c}asn\IeC {\v e}}{28}{section.54}
+\contentsline {chapter}{\numberline {3}Paraleln\IeC {\'\i } v\IeC {\'y}po\IeC {\v c}ty}{30}{chapter.57}
+\contentsline {section}{\numberline {3.1}S\IeC {\'e}riov\IeC {\'e} vs. paraleln\IeC {\'\i } v\IeC {\'y}po\IeC {\v c}ty}{30}{section.58}
+\contentsline {section}{\numberline {3.2}Datov\IeC {\'y} paralelismus vs. \IeC {\'u}lohov\IeC {\'y} paralelismus}{32}{section.62}
+\contentsline {subsection}{\numberline {3.2.1}Datov\IeC {\'y} paralelismus}{32}{subsection.63}
+\contentsline {subsection}{\numberline {3.2.2}\IeC {\'U}lohov\IeC {\'y} paralelismus}{32}{subsection.64}
+\contentsline {subsection}{\numberline {3.2.3}Load balancing}{32}{subsection.65}
+\contentsline {subsection}{\numberline {3.2.4}Pipeline}{32}{subsection.66}
+\contentsline {chapter}{\numberline {4}Program SoundAnalyzer}{34}{chapter.68}
+\contentsline {section}{\numberline {4.1}Koncepce programu}{34}{section.69}
+\contentsline {section}{\numberline {4.2}Pou\IeC {\v z}it\IeC {\'e} knihovny}{34}{section.70}
+\contentsline {section}{\numberline {4.3}Blokov\IeC {\'e} sch\IeC {\'e}ma}{34}{section.71}
+\contentsline {subsection}{\numberline {4.3.1}Inter thread queue}{34}{subsection.73}
+\contentsline {subsection}{\numberline {4.3.2}\emph {OpenCL} Goertzel}{36}{subsection.74}
+\contentsline {subsection}{\numberline {4.3.3}Recorder}{38}{subsection.77}
+\contentsline {subsection}{\numberline {4.3.4}File IO}{39}{subsection.78}
+\contentsline {subsection}{\numberline {4.3.5}Stats}{39}{subsection.79}
+\contentsline {subsection}{\numberline {4.3.6}Settings}{39}{subsection.80}
+\contentsline {subsection}{\numberline {4.3.7}Application}{39}{subsection.81}
+\contentsline {section}{\numberline {4.4}Licence}{39}{section.82}
+\contentsline {chapter}{\numberline {5}Knihovny pou\IeC {\v z}it\IeC {\'e} p\IeC {\v r}i sestavov\IeC {\'a}n\IeC {\'\i } programu Sound Analyzer}{40}{chapter.83}
+\contentsline {section}{\numberline {5.1}Knihovna openCL}{40}{section.84}
+\contentsline {subsection}{\numberline {5.1.1}OpenCL framework}{40}{subsection.85}
+\contentsline {subsection}{\numberline {5.1.2}Architektura openCL}{40}{subsection.86}
+\contentsline {subsection}{\numberline {5.1.3}Diagram t\IeC {\v r}\IeC {\'\i }d}{40}{subsection.87}
+\contentsline {subsection}{\numberline {5.1.4}Model platformy}{42}{subsection.89}
+\contentsline {subsubsection}{Podpora r\IeC {\r u}zn\IeC {\'y}ch verz\IeC {\'\i }}{42}{section*.90}
+\contentsline {subsection}{\numberline {5.1.5}Prov\IeC {\'a}d\IeC {\v e}c\IeC {\'\i } model}{42}{subsection.91}
+\contentsline {subsubsection}{Kontext a~fronty p\IeC {\v r}\IeC {\'\i }kaz\IeC {\r u}}{42}{section*.92}
+\contentsline {subsection}{\numberline {5.1.6}Pam\IeC {\v e}\IeC {\v t}ov\IeC {\'y} model}{43}{subsection.93}
+\contentsline {subsection}{\numberline {5.1.7}Programovac\IeC {\'\i } model}{43}{subsection.95}
+\contentsline {subsubsection}{Datov\IeC {\v e} paraleln\IeC {\'\i } model}{44}{section*.96}
+\contentsline {subsubsection}{\IeC {\'U}lohov\IeC {\v e} paraleln\IeC {\'\i } model}{44}{section*.97}
+\contentsline {subsubsection}{Synchronizace}{44}{section*.98}
+\contentsline {subsection}{\numberline {5.1.8}Pam\IeC {\v e}\IeC {\v t}ov\IeC {\'e} objekty}{44}{subsection.99}
+\contentsline {section}{\numberline {5.2}OpenGL}{44}{section.100}
+\contentsline {subsection}{\numberline {5.2.1}Historie OpenGL}{44}{subsection.101}
+\contentsline {subsection}{\numberline {5.2.2}Vykreslovac\IeC {\'\i } \IeC {\v r}et\IeC {\v e}zec}{45}{subsection.102}
+\contentsline {subsubsection}{Framebuffer}{45}{section*.104}
+\contentsline {subsubsection}{Zpracov\IeC {\'a}n\IeC {\'\i } pixel\IeC {\r u}}{45}{section*.105}
+\contentsline {subsubsection}{Zpracov\IeC {\'a}n\IeC {\'\i } vrchol\IeC {\r u}}{46}{section*.106}
+\contentsline {subsubsection}{Sestaven\IeC {\'\i } primitiv a rasterizace}{46}{section*.107}
+\contentsline {subsubsection}{Fragment shading a operace nad fragmenty}{46}{section*.108}
+\contentsline {section}{\numberline {5.3}OpenAL}{46}{section.109}
+\contentsline {subsection}{\numberline {5.3.1}Historie \emph {OpenAL}}{46}{subsection.110}
+\contentsline {subsection}{\numberline {5.3.2}Stru\IeC {\v c}n\IeC {\'y} popis}{47}{subsection.111}
+\contentsline {section}{\numberline {5.4}\emph {Qt}}{47}{section.113}
+\contentsline {subsection}{\numberline {5.4.1}Historie}{47}{subsection.114}
+\contentsline {subsection}{\numberline {5.4.2}Koncept sign\IeC {\'a}l-slot}{48}{subsection.115}
+\contentsline {subsection}{\numberline {5.4.3}\emph {QML}}{48}{subsection.116}
+\contentsline {chapter}{\numberline {6}M\IeC {\v e}\IeC {\v r}en\IeC {\'\i } p\IeC {\v r}\IeC {\'\i }nosu vyu\IeC {\v z}it\IeC {\'\i } grafick\IeC {\'e}ho \IeC {\v c}ipu}{49}{chapter.117}
+\contentsline {section}{\numberline {6.1}Po\IeC {\v c}et vyu\IeC {\v z}\IeC {\'\i }van\IeC {\'y}ch jader}{49}{section.118}
+\contentsline {section}{\numberline {6.2}Pr\IeC {\r u}m\IeC {\v e}rn\IeC {\'a} d\IeC {\'e}lka v\IeC {\'y}po\IeC {\v c}tu za posledn\IeC {\'\i } dobu}{49}{section.119}
+\contentsline {section}{\numberline {6.3}Metodika m\IeC {\v e}\IeC {\v r}en\IeC {\'\i }}{49}{section.120}
+\contentsline {section}{\numberline {6.4}Pou\IeC {\v z}it\IeC {\'e} po\IeC {\v c}\IeC {\'\i }ta\IeC {\v c}e}{50}{section.121}
+\contentsline {subsection}{\numberline {6.4.1}PC1}{50}{subsection.122}
+\contentsline {subsection}{\numberline {6.4.2}Notebook1}{50}{subsection.124}
+\contentsline {subsection}{\numberline {6.4.3}Dal\IeC {\v s}\IeC {\'\i } podm\IeC {\'\i }nky m\IeC {\v e}\IeC {\v r}en\IeC {\'\i }}{50}{subsection.126}
+\contentsline {section}{\numberline {6.5}Nam\IeC {\v e}\IeC {\v r}en\IeC {\'e} hodnoty}{51}{section.127}
+\contentsline {subsection}{\numberline {6.5.1}PC1}{51}{subsection.128}
+\contentsline {subsection}{\numberline {6.5.2}PC1 - m\IeC {\v e}\IeC {\v r}en\IeC {\'\i } vyu\IeC {\v z}it\IeC {\'\i } jader}{51}{subsection.130}
+\contentsline {subsection}{\numberline {6.5.3}Notebook1}{52}{subsection.132}
+\contentsline {section}{\numberline {6.6}Shrnut\IeC {\'\i }}{52}{section.134}
+\contentsline {section}{\numberline {6.7}Z\IeC {\'a}v\IeC {\v e}r m\IeC {\v e}\IeC {\v r}en\IeC {\'\i }}{53}{section.135}
+\contentsline {chapter}{\numberline {7}Z\IeC {\'a}v\IeC {\v e}r}{54}{chapter.136}
+\contentsline {chapter}{Literatura}{55}{section*.138}
+\contentsline {chapter}{Seznam symbol\r {u}, veli\v {c}in a zkratek}{56}{section*.140}
+\contentsline {chapter}{\numberline {A}U\IeC {\v z}ivatelsk\IeC {\'y} manu\IeC {\'a}l programu Sound Analyzer }{57}{chapter.141}
+\contentsline {section}{\numberline {A.1}Slovn\IeC {\'\i }\IeC {\v c}ek pojm\IeC {\r u} u\IeC {\v z}it\IeC {\'y}ch v t\IeC {\'e}to kapitole }{57}{section.142}
+\contentsline {subsection}{\numberline {A.1.1}Frequency indexes }{57}{subsection.143}
+\contentsline {subsection}{\numberline {A.1.2}Sampling frequency }{57}{subsection.144}
+\contentsline {subsection}{\numberline {A.1.3}Scale }{57}{subsection.145}
+\contentsline {subsection}{\numberline {A.1.4}Segment length }{57}{subsection.146}
+\contentsline {subsection}{\numberline {A.1.5}Segment overlap }{57}{subsection.147}
+\contentsline {section}{\numberline {A.2}Okno aplikace }{57}{section.148}
+\contentsline {section}{\numberline {A.3}Horn\IeC {\'\i } graf }{57}{section.150}
+\contentsline {section}{\numberline {A.4}Doln\IeC {\'\i } graf }{59}{section.151}
+\contentsline {section}{\numberline {A.5}Horn\IeC {\'\i } a doln\IeC {\'\i } prav\IeC {\'\i }tko }{59}{section.152}
+\contentsline {section}{\numberline {A.6}\IeC {\v C}asov\IeC {\'e} prav\IeC {\'\i }tko }{59}{section.153}
+\contentsline {section}{\numberline {A.7}Pole zobrazen\IeC {\'\i } }{59}{section.154}
+\contentsline {subsection}{\numberline {A.7.1}Timeline }{60}{subsection.155}
+\contentsline {subsection}{\numberline {A.7.2}Goertzel }{60}{subsection.156}
+\contentsline {subsection}{\numberline {A.7.3}OneShot }{60}{subsection.157}
+\contentsline {section}{\numberline {A.8}Naviga\IeC {\v c}n\IeC {\'\i } pole }{60}{section.158}
+\contentsline {subsection}{\numberline {A.8.1}Tla\IeC {\v c}\IeC {\'\i }tko File }{60}{subsection.159}
+\contentsline {subsubsection}{Open for reading }{60}{subsection.159}
+\contentsline {subsubsection}{Open for writing }{60}{subsection.159}
+\contentsline {subsubsection}{Close file }{61}{subsection.159}
+\contentsline {subsubsection}{Process mat file }{61}{subsection.159}
+\contentsline {subsubsection}{Quit }{61}{subsection.159}
+\contentsline {subsection}{\numberline {A.8.2}Tla\IeC {\v c}\IeC {\'\i }tko Options }{61}{subsection.160}
+\contentsline {subsection}{\numberline {A.8.3}Jm\IeC {\'e}no souboru pro z\IeC {\'a}pis/\IeC {\v c}ten\IeC {\'\i } }{61}{subsection.161}
+\contentsline {subsection}{\numberline {A.8.4}Tla\IeC {\v c}\IeC {\'\i }tko Start }{61}{subsection.162}
+\contentsline {subsection}{\numberline {A.8.5}Tla\IeC {\v c}\IeC {\'\i }tko Pause }{62}{subsection.163}
+\contentsline {subsection}{\numberline {A.8.6}Po\IeC {\v c}et jader pou\IeC {\v z}it\IeC {\'y}ch p\IeC {\v r}i v\IeC {\'y}po\IeC {\v c}tech }{62}{subsection.164}
+\contentsline {subsection}{\numberline {A.8.7}Pr\IeC {\r u}m\IeC {\v e}rn\IeC {\'y} \IeC {\v c}as v\IeC {\'y}po\IeC {\v c}tu spektra }{62}{subsection.165}
+\contentsline {subsection}{\numberline {A.8.8}Pr\IeC {\r u}m\IeC {\v e}rn\IeC {\'a} frekvence v\IeC {\'y}po\IeC {\v c}tu spektra }{62}{subsection.166}
+\contentsline {subsection}{\numberline {A.8.9}Pr\IeC {\r u}m\IeC {\v e}rn\IeC {\'a} vzorkovac\IeC {\'\i } frekvence }{62}{subsection.167}
+\contentsline {section}{\numberline {A.9}Kl\IeC {\'a}vesov\IeC {\'e} zkratky }{62}{section.168}
+\contentsline {section}{\numberline {A.10}Dialog nastaven\IeC {\'\i } }{63}{section.169}
+\contentsline {subsection}{\numberline {A.10.1}Karta General }{63}{subsection.170}
+\contentsline {subsubsection}{Automatic hide }{63}{subsection.170}
+\contentsline {subsubsection}{Scale }{63}{subsection.170}
+\contentsline {subsection}{\numberline {A.10.2}Karta Recorder }{63}{subsection.171}
+\contentsline {subsubsection}{Bits per sample }{63}{subsection.171}
+\contentsline {subsubsection}{Channels }{63}{subsection.171}
+\contentsline {subsubsection}{Device }{63}{subsection.171}
+\contentsline {subsubsection}{Capture device }{63}{subsection.171}
+\contentsline {subsubsection}{Sampling frequency }{64}{subsection.171}
+\contentsline {subsubsection}{Segment length }{64}{subsection.171}
+\contentsline {subsection}{\numberline {A.10.3}Karta Goertzel }{64}{subsection.172}
+\contentsline {subsubsection}{Segment overlap }{64}{subsection.172}
+\contentsline {subsubsection}{Frequency indexes }{64}{subsection.172}
+\contentsline {subsubsection}{Tla\IeC {\v c}\IeC {\'\i }tko Set All }{64}{subsection.172}
+\contentsline {subsubsection}{P\IeC {\v r}ep\IeC {\'\i }na\IeC {\v c} Device }{64}{subsection.172}
+\contentsline {section}{\numberline {A.11}P\IeC {\v r}\IeC {\'\i }klad pou\IeC {\v z}it\IeC {\'\i } }{65}{section.173}
+\contentsline {chapter}{\numberline {B}Instalace projektu - spu\IeC {\v s}t\IeC {\v e}n\IeC {\'\i } aplikace }{66}{chapter.174}
+\contentsline {section}{\numberline {B.1}GPU AMD }{66}{section.175}
+\contentsline {section}{\numberline {B.2}GPU NVidia }{66}{section.176}
+\contentsline {chapter}{\numberline {C}Instalace projektu - pokra\IeC {\v c}ov\IeC {\'a}n\IeC {\'\i } ve v\IeC {\'y}voji }{67}{chapter.177}
+\contentsline {section}{\numberline {C.1}Instalace GNU C++ }{67}{section.178}
+\contentsline {section}{\numberline {C.2}Verzovac\IeC {\'\i } syst\IeC {\'e}m Git }{67}{section.179}
+\contentsline {section}{\numberline {C.3}Qt Creator }{68}{section.180}
+\contentsline {section}{\numberline {C.4}OpenGL }{68}{section.181}
+\contentsline {section}{\numberline {C.5}OpenAL }{68}{section.182}
+\contentsline {section}{\numberline {C.6}OpenCL }{68}{section.183}
+\contentsline {chapter}{\numberline {D}Slovn\IeC {\'\i }\IeC {\v c}ek pojm\IeC {\r u} knihovny OpenCL }{70}{chapter.184}
+\contentsline {section}{\numberline {D.1}Application -- Aplikace }{70}{section.185}
+\contentsline {section}{\numberline {D.2}Blocking a Non-Blocking Enqueue API calls -- Blokuj\IeC {\'\i }c\IeC {\'\i } a~neblokuj\IeC {\'\i }c\IeC {\'\i } p\IeC {\v r}\IeC {\'\i }kazy }{70}{section.186}
+\contentsline {section}{\numberline {D.3}Barrier -- Bari\IeC {\'e}ra }{70}{section.187}
+\contentsline {section}{\numberline {D.4}Buffer object -- Buffer }{70}{section.188}
+\contentsline {section}{\numberline {D.5}Built-in kernel -- Vestav\IeC {\v e}n\IeC {\'e} j\IeC {\'a}dro }{71}{section.189}
+\contentsline {section}{\numberline {D.6}Command -- P\IeC {\v r}\IeC {\'\i }kaz }{71}{section.190}
+\contentsline {section}{\numberline {D.7}Command Queue -- Fronta p\IeC {\v r}\IeC {\'\i }kaz\IeC {\r u} }{71}{section.191}
+\contentsline {section}{\numberline {D.8}Command Queue Barrier -- Bari\IeC {\'e}ra fronty p\IeC {\v r}\IeC {\'\i }kaz\IeC {\r u} }{71}{section.192}
+\contentsline {section}{\numberline {D.9}Compute device memory -- Pam\IeC {\v e}\IeC {\v t} v\IeC {\'y}po\IeC {\v c}etn\IeC {\'\i }ho za\IeC {\v r}\IeC {\'\i }zen\IeC {\'\i } }{72}{section.193}
+\contentsline {section}{\numberline {D.10}Compute unit -- V\IeC {\'y}po\IeC {\v c}etn\IeC {\'\i }ho jednotka }{72}{section.194}
+\contentsline {section}{\numberline {D.11}Concurrency -- Soub\IeC {\v e}\IeC {\v z}nost }{72}{section.195}
+\contentsline {section}{\numberline {D.12}Constant memory -- Pam\IeC {\v e}\IeC {\v t} konstant }{72}{section.196}
+\contentsline {section}{\numberline {D.13}Context -- Kontext }{72}{section.197}
+\contentsline {section}{\numberline {D.14}Custom device -- Speci\IeC {\'a}ln\IeC {\'\i } za\IeC {\v r}\IeC {\'\i }zen\IeC {\'\i } }{72}{section.198}
+\contentsline {section}{\numberline {D.15}Data parallel programming model -- Datov\IeC {\'y} paraleln\IeC {\'\i } programovac\IeC {\'\i } model }{73}{section.199}
+\contentsline {section}{\numberline {D.16}Device -- Za\IeC {\v r}\IeC {\'\i }zen\IeC {\'\i } }{73}{section.200}
+\contentsline {section}{\numberline {D.17}Event object -- Objekt ud\IeC {\'a}losti }{73}{section.201}
+\contentsline {section}{\numberline {D.18}Event wait list -- Seznam \IeC {\v c}ekaj\IeC {\'\i }c\IeC {\'\i }ch ud\IeC {\'a}lost\IeC {\'\i } }{73}{section.202}
+\contentsline {section}{\numberline {D.19}Framework -- Framework }{73}{section.203}
+\contentsline {section}{\numberline {D.20}Global ID -- Glob\IeC {\'a}ln\IeC {\'\i } ID }{73}{section.204}
+\contentsline {section}{\numberline {D.21}Global memory -- Glob\IeC {\'a}ln\IeC {\'\i } pam\IeC {\v e}\IeC {\v t} }{74}{section.205}
+\contentsline {section}{\numberline {D.22}GL share group -- Sd\IeC {\'\i }len\IeC {\'a} GL skupina }{74}{section.206}
+\contentsline {section}{\numberline {D.23}Handle -- Rukoje\IeC {\v t} }{74}{section.207}
+\contentsline {section}{\numberline {D.24}Host -- Hostitel }{74}{section.208}
+\contentsline {section}{\numberline {D.25}Host pointer -- Ukazatel hostitele }{74}{section.209}
+\contentsline {section}{\numberline {D.26}Illegal -- Nedovolen\IeC {\'y} }{74}{section.210}
+\contentsline {section}{\numberline {D.27}Image object -- Obr\IeC {\'a}zek }{75}{section.211}
+\contentsline {section}{\numberline {D.28}Implementation defined -- Implementa\IeC {\v c}n\IeC {\v e} z\IeC {\'a}visl\IeC {\'e} }{75}{section.212}
+\contentsline {section}{\numberline {D.29}In-order execution -- Prov\IeC {\'a}d\IeC {\v e}n\IeC {\'\i } v~po\IeC {\v r}ad\IeC {\'\i } }{75}{section.213}
+\contentsline {section}{\numberline {D.30}Kernel -- J\IeC {\'a}dro }{75}{section.214}
+\contentsline {section}{\numberline {D.31}Kernel object -- Objekt j\IeC {\'a}dra }{75}{section.215}
+\contentsline {section}{\numberline {D.32}Local ID -- Lok\IeC {\'a}ln\IeC {\'\i } ID }{75}{section.216}
+\contentsline {section}{\numberline {D.33}Local memory -- Lok\IeC {\'a}ln\IeC {\'\i } pam\IeC {\v e}\IeC {\v t} }{76}{section.217}
+\contentsline {section}{\numberline {D.34}Marker -- Zna\IeC {\v c}ka }{76}{section.218}
+\contentsline {section}{\numberline {D.35}Memory objects -- Pam\IeC {\v e}\IeC {\v t}ov\IeC {\'e} objekty }{76}{section.219}
+\contentsline {section}{\numberline {D.36}Memory regions (pools) -- Pam\IeC {\v e}\IeC {\v t}ov\IeC {\'e} oblasti }{76}{section.220}
+\contentsline {section}{\numberline {D.37}Object -- Objekt }{76}{section.221}
+\contentsline {section}{\numberline {D.38}Out-of-order execution -- Prov\IeC {\'a}d\IeC {\v e}n\IeC {\'\i } mimo po\IeC {\v r}ad\IeC {\'\i } }{76}{section.222}
+\contentsline {section}{\numberline {D.39}Parent device -- Rodi\IeC {\v c}ovsk\IeC {\'e} za\IeC {\v r}\IeC {\'\i }zen\IeC {\'\i } }{77}{section.223}
+\contentsline {section}{\numberline {D.40}Platform -- Platforma }{77}{section.224}
+\contentsline {section}{\numberline {D.41}Private memory -- Soukrom\IeC {\'a} pam\IeC {\v e}\IeC {\v t} }{77}{section.225}
+\contentsline {section}{\numberline {D.42}Processing element -- Zpracuj\IeC {\'\i }c\IeC {\'\i } jednotka }{77}{section.226}
+\contentsline {section}{\numberline {D.43}Program -- Program }{77}{section.227}
+\contentsline {section}{\numberline {D.44}Program object -- Programov\IeC {\'y} objekt }{77}{section.228}
+\contentsline {section}{\numberline {D.45}Reference count -- Po\IeC {\v c}\IeC {\'\i }tadlo odkaz\IeC {\r u} }{78}{section.229}
+\contentsline {section}{\numberline {D.46}Relaxed consistency -- Rozvoln\IeC {\v e}n\IeC {\'a} soudr\IeC {\v z}nost }{78}{section.230}
+\contentsline {section}{\numberline {D.47}Resource -- Zdroj }{78}{section.231}
+\contentsline {section}{\numberline {D.48}Retain, release -- P\IeC {\v r}ivlastni, uvolni }{78}{section.232}
+\contentsline {section}{\numberline {D.49}Root device -- Ko\IeC {\v r}enov\IeC {\'e} za\IeC {\v r}\IeC {\'\i }zen\IeC {\'\i } }{79}{section.233}
+\contentsline {section}{\numberline {D.50}Sampler -- Vzorkova\IeC {\v c} }{79}{section.234}
+\contentsline {section}{\numberline {D.51}SIMD:Single instruction multiple data -- SIMD }{79}{section.235}
+\contentsline {section}{\numberline {D.52}SPMD: Single program multiple data -- SPMD }{79}{section.236}
+\contentsline {section}{\numberline {D.53}Sub-device -- Subza\IeC {\v r}\IeC {\'\i }zen\IeC {\'\i } }{79}{section.237}
+\contentsline {section}{\numberline {D.54}Task parallel programming model -- Paraleln\IeC {\v e} \IeC {\'u}lohov\IeC {\'y} programovac\IeC {\'\i } model }{80}{section.238}
+\contentsline {section}{\numberline {D.55}Thread-safe -- Vl\IeC {\'a}knov\IeC {\v e} bezpe\IeC {\v c}n\IeC {\'e} }{80}{section.239}
+\contentsline {section}{\numberline {D.56}Undefined -- Nedefinov\IeC {\'a}no }{80}{section.240}
+\contentsline {section}{\numberline {D.57}Work group -- Pracovn\IeC {\'\i } skupina }{80}{section.241}
+\contentsline {section}{\numberline {D.58}Work group barrier -- Bari\IeC {\'e}ra pracovn\IeC {\'\i } skupiny }{80}{section.242}
+\contentsline {section}{\numberline {D.59}Work-Item -- Pracovn\IeC {\'\i } polo\IeC {\v z}ka }{80}{section.243}

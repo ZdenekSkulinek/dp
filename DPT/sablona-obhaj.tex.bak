@@ -1,0 +1,212 @@
+% Soubory musí být v kódování, které je nastaveno v příkazu \usepackage[...]{inputenc}
+
+\documentclass[%
+%  draft,    				  % Testovací překlad
+  12pt,       				% Velikost základního písma je 12 bodů
+  %a4paper,    				% Formát papíru je A4
+	t,                  % obsah slajdů nebude centrovaný, nýbrž budou začínat od hora
+%  oneside,      			% Jednostranný tisk (výchozí)
+%% Z následujicich voleb lze použít maximálně jednu:
+%	dvipdfm  						% výstup bude zpracován programem 'dvipdfm' do PDF
+%	dvips	  						% výstup bude zpracován programem 'dvips' do PS
+%	pdftex							% překlad bude proveden programem 'pdftex' do PDF (výchozí)
+	unicode,						% Záložky a informace budou v kódování unicode
+%% Z následujících voleb lze použít jen jednu:
+%english,            % originální jazyk je angličtina
+czech              % originální jazyk je čeština (výchozí)
+%slovak,             % originální jazyk je slovenčina
+]{beamer}				    	% Dokument třídy 'zpráva'
+
+\usepackage[utf8]		%	Kódování zdrojových souborů je v UTF-8
+	{inputenc}					% Balíček pro nastavení kódování zdrojových souborů
+
+\usepackage{graphicx} % Balíček 'graphicx' pro vkládání obrázků
+											% Nutné pro vložení log školy a fakulty
+
+\usepackage[
+	nohyperlinks				% Nebudou tvořeny hypertextové odkazy do seznamu zkratek
+]{acronym}						% Balíček 'acronym' pro sazby zkratek a symbolů
+											% Nutné pro použití prostředí 'seznamzkratek' balíčku 'thesis'
+
+%% Balíček hyperref vkládá beamer automaticky
+%\usepackage[
+%	breaklinks=true,		% Hypertextové odkazy mohou obsahovat zalomení řádku
+%	hypertexnames=false % Názvy hypertextových odkazů budou tvořeny
+%											% nezávisle na názvech TeXu
+%]{hyperref}						% Balíček 'hyperref' pro sazbu hypertextových odkazů
+%											% Nutné pro použití příkazu 'nastavenipdf' balíčku 'thesis'
+
+\usepackage{pdfpages} % Balíček umožňující vkládat stránky z PDF souborů
+                      % Nutné při vkládání titulních listů a zadání přímo
+                      % ve formátu PDF z informačního systému
+
+\usepackage{enumitem} % Balíček pro nastavení mezerování v odrážkách
+  \setlist{topsep=0pt,partopsep=0pt,noitemsep}
+
+\usepackage{cmap} 		% Balíček cmap zajišťuje, že PDF vytvořené `pdflatexem' je
+											% plně "prohledávatelné" a "kopírovatelné"
+
+\usepackage{upgreek}	% Balíček pro sazbu stojatých řeckých písmem
+											% např. stojaté pí: \uppi
+											% např. stojaté mí: \upmu (použitelné třeba v mikrometrech)
+											% pozor, grafická nekompatibilita s fonty typu Computer Modern!
+
+\usepackage{dirtree}		% sazba adresářové struktury
+
+\usepackage[formats]{listings}	% Balíček pro sazbu zdrojových textů
+\lstset{
+    language=[LaTeX]{TeX},	% definice použitého jazyka
+    basicstyle=\ttfamily,	% definice základního stylu písma
+    tabsize=2,			% definice velikosti tabulátoru
+    inputencoding=utf8,
+    %inputencoding=cp1250,      % pro soubory uložené ve standardním kódování Windows CP1250
+    extendedchars=true,
+    literate=%  definice symbolů s diakritikou
+    {á}{{\'a}}1
+    {č}{{\v{c}}}1
+    {ď}{{\v{d}}}1
+    {é}{{\'e}}1
+    {ě}{{\v{e}}}1
+    {í}{{\'i}}1
+    {ň}{{\v{n}}}1
+    {ó}{{\'o}}1
+    {ř}{{\v{r}}}1
+    {š}{{\v{s}}}1
+    {ť}{{\v{t}}}1
+    {ú}{{\'u}}1
+    {ů}{{\r{u}}}1
+    {ý}{{\'y}}1
+    {ž}{{\v{z}}}1
+    {Á}{{\'A}}1
+    {Č}{{\v{C}}}1
+    {Ď}{{\v{D}}}1
+    {É}{{\'E}}1
+    {Ě}{{\v{E}}}1
+    {Í}{{\'I}}1
+    {Ň}{{\v{N}}}1
+    {Ó}{{\'O}}1
+    {Ř}{{\v{R}}}1
+    {Š}{{\v{S}}}1
+    {Ť}{{\v{T}}}1
+    {Ú}{{\'U}}1
+    {Ů}{{\r{U}}}1
+    {Ý}{{\'Y}}1
+    {Ž}{{\v{Z}}}1
+}
+
+%% Nastavení českého jazyka při sazbě v češtině.
+% Pro sazbu češtiny je možné použít mezinárodní balíček 'babel', jenž
+% použití doporučujeme pro nové instalace (MikTeX2.8,TeXLive2009), nebo
+% národní balíček 'czech', který doporučujeme ve starších instalacích.
+% Balíček 'babel' bude správně fungovat pouze ve spojení s programy
+% 'latex', 'pdflatex', zatímco balíček 'czech' bude fungovat ve spojení
+% s programy 'cslatex', 'pdfcslatex'.
+% Varianta A:
+\usepackage
+  {babel}             % Balíček pro sazbu různojazyčných dokumentů; kompilovat (pdf)latexem!
+										% převezme si z parametrů třídy správný jazyk
+\usepackage{lmodern}	% vektorové fonty Latin Modern, nástupce půvoních Knuthových Computern Modern fontů
+\usepackage{textcomp} % Dodatečné symboly
+\usepackage[T1]{fontenc}  % Kódování fontu - mj. kvůli správným vzorům pro dělení slov
+% Varianta B:
+%\usepackage{czech}   % Alternativní balíček pro sazbu v českém jazyce, kompilovat (pdf)cslatexem!
+
+\usepackage[%
+%% Z následujících voleb lze použít pouze jednu
+% left,               % Rovnice a popisky plovoucich objektů budou %zarovnány vlevo
+  center,             % Rovnice a popisky plovoucich objektů budou zarovnány na střed (vychozi)
+%% Z následujících voleb lze použít pouze jednu
+semestral						%	sazba zprávy semestrálního projektu
+%bachelor						%	sazba bakalářské práce
+%diploma						 % sazba diplomové práce
+%treatise            % sazba pojednání o dizertační práci
+%phd                 % sazba dizertační práce
+]{thesis}             % Balíček pro sazbu studentských prací
+                      % Musí být vložen až jako poslední, aby
+                      % ostatní balíčky nepřepisovaly jeho příkazy
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%      Definice informací o dokumentu             %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{nastaveni_udaju}  % do tohoto souboru doplňte údaje o sobě, o názvu práce...
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%     Nastavení polí ve Vlastnostech dokumentu PDF      %%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Při vloženém balíčku 'hyperref' lze použít příkaz '\nastavenipdf'
+\nastavenipdf
+%  Nastavení polí je možné provést také ručně příkazem:
+%\hypersetup{
+%  pdftitle={Název studentské práce},    	% Pole 'Document Title'
+%  pdfauthor={Autor studenstké práce},   	% Pole 'Author'
+%  pdfsubject={Typ práce}, 						  	% Pole 'Subject'
+%  pdfkeywords={Klíčová slova}           	% Pole 'Keywords'
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% mod pro prezentaci, pouzije se tema (rozvrzeni) Darmstadt (nahradit podle libosti za jine)
+\mode<presentation>{\usetheme{Darmstadt}}
+% lze volat i \mode<presentation>{ \usetheme{Darmstadt} \usecolortheme{dove}}
+
+\begin{document}
+
+% snimek s titulni strankou vysazen bez hornich, dolnich a postranich list (volba plain),
+% neni tak vysazen ani nadpis snimku
+\vytvortitulku
+
+% snimek s cili (zadanim) prace
+\frame{  %2.snimek
+   % nadpis snimku
+   \frametitle{Cíle práce}
+   % zde vlozit vlastni text k cilum (zadani) prace
+
+		\begin{itemize}
+			\item Nastudovat\,\dots
+			\item Popsat\,\dots
+			\item Implementovat\,\dots
+			\item Porovnat\,\dots
+		\end{itemize}
+
+}
+
+% Zde vkladat dalsi snimky prezentace
+
+% dalsi snimky prezentace
+%\frame{  % x-ty.snimek
+     % nadpis snimku
+%    \frametitle{Nadpis snimku}
+%
+% }
+
+
+% predposledni snimek se zaverenym hodnocenim prace
+\frame{ % predposledni snimek
+ % nadpis snimku
+ \frametitle{Závěr}
+ % zde vlozit text zaveru prezentace
+
+}
+
+
+% posledni snimek prezentace s podekovanim za pozornost
+\frame{  % posledni snimek
+   % nadpis snimku
+   \frametitle{Závěr}
+\vfill
+\begin{center}
+{\Huge Děkuji za pozornost!}
+\end{center}
+\vfill
+}
+
+\begin{frame}
+	\frametitle{Otázky oponenta}
+	% odpovedi na otázky oponenta
+	\emph{Jaká je souvislost Vašeho vzorce (1.1) s~Maxwellovými rovnicemi v~integrálním tvaru?}\\[2ex]
+	Hm\,\dots
+\end{frame}
+
+\end{document}

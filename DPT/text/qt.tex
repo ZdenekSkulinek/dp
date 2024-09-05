@@ -1,0 +1,42 @@
+\section{\emph{Qt}}
+
+\emph{Qt} je multiplatformní framework. Je definován snad na všechny desktopové i mobilní operační systémy. Je vydáván ve dvou licencích. \emph{LGPL} umožňuje volné šíření \emph{Qt}, ale neumožňuje statické linkování, jsou dostupné jen základní částni bez přídavných modulů, programátor musí dát návod jak vyměnit dynamicky linkované knihovny za novější, licence jeho produktu musí být také \emph{LGPL}. Výše uvedené nedostatky řeší licence proprietární.
+
+\subsection{Historie}
+
+Historie \emph{Qt} se začala datovat v roce 1990 v Norsku. V roce 1995 bylo první vydání firmou Trolltech. V roce 2005 bylo \emph{Qt} zcela přepracováno na verzi 4.0. V roce 2008 byl Trolltech koupen Nokií. V roce 2010 Nokia vydává Symbian, operační systém pro smartphony založený na \emph{Qt}. V roce 2012 byl představen jazyk \emph{QML} a \emph{Qt} 5.0. \emph{Qt} se stalo samostatnou společností v roce 2014.
+
+\subsection{Koncept signál-slot}
+
+V \emph{Qt} je alternativa k callback funkcím, je to koncept signál-slot. Když nastane nějaká
+událost, je emitován signál. Slot je funkce , která je volána jako odezva na emitovaný signál. V \emph{Qt} je řada předdefinovaných signálů, ale lze jednoduše tvořit signály vlastní. 
+
+
+Signály a sloty jsou typově bezpečné, čímž se míní skutečnost, že parametry, respektive typy a počet parametrů jsou u signálu i slotu stejné.
+
+
+Je varianta, kde se signál a slot propojí jmény funkcí (string based), překlad jména funkce na volání skutečné funkce se provádí za běhu aplikace.
+
+
+Signály a sloty jsou vláknově bezpečné, dokonce se ve vícevláknových aplikacích požívají pro mezivláknovou komunikaci.
+
+\subsection{\emph{QML}}
+
+Ve verzi 5 \emph{Qt} představilo jazyk \emph{QML}. Je to deklarativní jazyk, který popisuje layout
+uživatelského rozhraní. Nad to obsluha událostí je nyní ve stejném \emph{QML} souboru v~jazyce javascript.
+Celý kontroler se tak přesunul na novou platformu.
+
+Přesto je stále možné tvořit ovládací prvky pro \emph{QML} v jazyce C++, volat z~\emph{C++}
+\emph{javascriptové} funkce a volat z~\emph{javascriptových} funkcí \emph{C++} funkce.
+
+
+Velkou novinkou je zavedení \emph{vlastností} (properties) objektů v \emph{QML}. Nastavení vlastnosti nemusí být jen konstanta, ale i složitější konstrukce v jazyce \emph{javascript}.
+Pokud se jedna nebo více proměnných, na kterých \emph{vlastnost} závisí změní, dojde k~automatickému přepočítání a je stanovena nová hodnota proměnné-vlastnosti.
+
+
+Úskalím tohoto konceptu je, že při neopatrném zacházení s vlastnostmi mohou vznikat cyklické závislosti, kde jedna \emph{vlastností} závisí na druhé, ale ta současně na první. Často nejsou tyto závislosti zřejmé.
+
+Předchozí tzv. widgetové aplikace se nedají s tímto novým konceptem kombinovat. Je ale stále možné takovéto widgetové aplikace v \emph{Qt} 5 vytvářet.
+
+
+Daní za \emph{QML} je nižší výkon aplikace a vysoké paměťové nároky. Výhodou má naopak být rychlost vývoje a aplikace \emph{javasriptu} je velmi stabilní i po chybě programátora.

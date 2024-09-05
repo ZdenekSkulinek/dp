@@ -1,0 +1,94 @@
+\begin{seznamzkratek}{KolikMista}
+
+	%\novazkratka{zkTemp}		% název
+	%	{Velikost levého sloupce seznamu}								% zkratka
+	%	{-- určujete délkou parametru prostředí \texttt{seznamzkratek} (viz zdroják)}
+											% rozvinutí zkratky
+	\novazkratka{zkAD}		% název
+		%
+		{$A,D$}								% zkratka
+		{Matice, v tomto případě jsou to konstanty v Goertzelově algoritmu}		
+
+	\novazkratka{zka312}		% název
+		%
+		{$a_{3,12}$}								% zkratka
+		{Prvek matice $A$ maticového Goertzelova vztahu pro více kmitočtů-- 3. kmitočet, 1. řádek, 2. sloupec matice maticového Goertzelova vztahu}														
+
+	\novazkratka{zkCPU}		% název
+	%
+		{CPU}								% zkratka
+		{Central Processing Unit -- centrální procesorová jednotka}
+
+	\novazkratka{zkDFŘ}		% název
+		%
+		{DFŘ}								% zkratka
+		{Disktrétní Fourierova Řada}		
+
+	\novazkratka{zkDFT}		% název
+		%
+		{DFT}								% zkratka
+		{Disktrétní Fourierova Transformace}		
+
+	\novazkratka{zkDSP}		% název
+	%
+		{DSP}								% zkratka
+		{číslicové zpracování signálů -- Digital Signal Processing}
+											% rozvinutí zkratky
+	\novazkratka{zkFFT}		% název
+		%
+		{FFT}								% zkratka
+		{Fast Fourier Transform -- rychlá Fourierova transformace}
+
+	%%% bsymfvz
+	\novazkratka{symfvz}						% název
+		{\ensuremath{f_\textind{vz}}} % symbol
+		{vzorkovací kmitočet}					% popis
+	%%% esymfvz
+
+
+	\novazkratka{zkGPU}		% název
+		%
+		{GPU}								% zkratka
+		{Graphics Processing Unit -- grafická procesorová jednotka}
+
+	\novazkratka{zkjadro}		% název
+		%
+		{Jádro}								% zkratka
+		{Program vykonávaný na jedné pracovní jednotce v knihovně OpenCL}
+
+	\novazkratka{zkloadbalancing}		% název
+		%
+		{Load balancing}								% zkratka
+		{Rozložení zátěže}														
+
+	\novazkratka{zkNDRange}		% název
+		%
+		{NDRange}								% zkratka
+		{Rozměry N-rozměrné krychle v knihovně OpenCL}
+
+	\novazkratka{zkOverlap}		% název
+		%
+		{Overlap}								% zkratka
+		{Přesah - segment délky $n$ načtený ze vstupního zařízení je rozšířen o tuto délku na velikost $n + overlap$ a nad segmentem této délky je prováděn výpočet Goertzelovým algoritmem}				
+
+	\novazkratka{zkpipeline}		% název
+		%
+		{Pipeline}								% zkratka
+		{Zřetězené zpracování}
+
+	\novazkratka{zkpracjedn}		% název
+		%
+		{Pracovní jednotka}								% zkratka
+		{Fyzické jádro CPU nebo GPU jak je značeno v knihovně OpenCL}
+
+	\novazkratka{zkSIMD}		% název
+		%
+		{SIMD}								% zkratka
+		{Single Instruction Multiple Data-- jedna instrukce, více dat}
+
+	\novazkratka{zkSPMD}		% název
+		%
+		{SPMD}								% zkratka
+		{Single Process Multiple Data -- jeden proces, více dat}
+		
+\end{seznamzkratek}

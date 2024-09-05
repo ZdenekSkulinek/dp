@@ -1,0 +1,26 @@
+\chapter*{Úvod}
+\phantomsection
+\addcontentsline{toc}{chapter}{Úvod}
+
+
+Moderní architektury procesorů využívají paralelismus jako důležitou cestu
+ke zvýšení výpočetního výkonu. Řeší se tím zejména technické problémy při
+zvyšování hodinových kmitočtů, kde se naráží na fyzikální limity.
+\zk{zkCPU} zvyšují výkon přidáváním jader. \zk{zkGPU} 
+se vyvinula z pevně dané renderovací funkcionality
+do podoby paralelních programovatelných procesorů.	Protože dnešní počítače
+často obsahují vícejádrové \zk{zkCPU} a \zk{zkGPU} a další procesory,
+je velmi důležité vzít v úvahu specifika programování pro takovéto
+ paralelní systémy.
+
+Vytváření aplikací pro vícejádrové procesory je oproti tradičním jednojádrovým
+aplikacím složitější, neboť je potřeba použít zcela jiného přístupu. Více procesorové systémy jsou navíc silně platformně a hardwarově závislé, což činí jejich programování obtížnější.
+
+Mým úkolem je ukázat možnosti dnešních počítačů při zpracování signálu.
+Jako modelový příklad mám implementovat \emph{Goertzelův algoritmus}, což je
+číslicový filtr, na jehož vstupu je číslicový signál a parametr $k$, udávající  konkrétní harmonickou  složku spektra signálu navzorkovaného s kmitočtem $f_{vz}$. Jeho výstupem je pak jediná hodnota vyjadřující amplitudu na určitém kmitočtu.
+
+Paralelizovaný Goertzelův algoritmus představím na své aplikaci nazvané \emph{Sound Analyzer}, která počítá libovolná počet složek spektra v reálném čase a zobrazuje výsledné spektrum g grafickém prostředí.
+
+Tato práce zažíná představením \emph{Goertzelova algoritmu} \ref{kap:goertzeluvalgoritmus}. Na jejím základě jsem napsal kapitolu \emph{možnosti řešení}\ref{kap:moznostireseni}, ve které uvádím techniky řešení a odvozuji vzorce, které použiji pro sestavení programu \emph{Sound Analyzer}. Kapitola následující je pak malým úvodem do problematiky paralelizace. Řešení diplomové práce, program \emph{Sound Analyzer} \ref{kap:programsoundanalyzer} včetně jeho součástí, koncepce a licence jsou uvedeny v kapitole \ref{kap:programsoundanalyzer}. Z~popisu programu přecházím do popisu použitých knihoven\ref{kap:libraries} a vysvětlení, proč jsem využil zrovna tyto.
+V poslední kapitole \emph{měření přínosu} \ref{kap:measurement} odpovídám na otázku, jaký je přínos využití GPU při zpracování signálu.

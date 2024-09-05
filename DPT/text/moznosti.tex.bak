@@ -1,0 +1,534 @@
+\chapter{Možnosti paralelizace}
+\label{kap:moznostireseni}
+
+\section{Rozdělení na $N$-částí a jejich průměrování}
+
+Jako první nápad je, aby každé jádro procesoru zpracovávalo poměrnou část výpočtu.
+Dostali bychom $N$ výsledků (kde je $N$-počet jader procesoru) a z těch by se udělal
+průměr. Jenže z $N$-krát méně vzorků pro výpočet by znamenalo také $N$-krát širší pásmo, které zkoumám. Filtr IIR je totiž pásmová propust. Abych měřil co nejpřesněji, musí být co nejužší. To znamená $N$-krát menší přesnost. Průměrování to zcela jistě nespraví. Navíc se tím neušetří žádný výpočet. Proto dále nebudu v této úvaze pokračovat.
+
+\section{Variace stavové proměnné}
+
+V našem případě by bylo výhodnější, kdybych mohl počítat s neznámými stavovými proměnnými.
+Ty totiž počítá jiné jádro. Řekněme, že začínám $n$-tým vzorkem, počítám pro 4 hodnoty $x[n]$, ve stavových proměnných  $v_1$ a $v_2$ mám neznámé hodnoty  $R$ a $S$.
+
+\begin{myequation}
+\begin{aligned}
+\label{vztah:mojevariacestav}
+v_1[n] &= R, &&\\
+v_2[n] &= S, &&\\
+2\cos{k\frac{2\pi}{N}} &= C &&\\
+v_1[n+1] &= v_2[n] =S, &&\\
+v_2[n+1] &= x[n]+2\cos{k\frac{2\pi}{N}}v_2[n]-v_1[n] = x[n]+CS-R, &&\\
+v_1[n+2] &= v_2[n+1] = x[n]+CS-R, &&\\
+v_2[n+2] &= x[n+1]+2\cos{k\frac{2\pi}{N}}v_2[n+1]-v_1[n+1] = &&\\  & x[n+1]+C(x[n]+CS-R)-S =&&\\ &
+x[n+1]+Cx[n]+(C^2-1)S-CR, &&\\
+v_1[n+3] &= v_2[n+2] =  &&\\& 
+x[n+1]+Cx[n]+(C^2-1)S-CR,
+\end{aligned}
+\end{myequation}
+
+\begin{myequation*}
+\begin{aligned} 
+v_2[n+3] &= x[n+2]+2\cos{k\frac{2\pi}{N}}v_2[n+2]-v_1[n+2] =  &&\\  & 
+x[n+2]+C(x[n+1]+Cx[n]+(C^2-1)S-CR)&&\\&- x[n]-CS+R=&&\\& 
+x[n+2]+Cx[n+1]+(C^2-1)x[n]+CS(C^2-2)-&&\\&(C^2-1)R &&\\
+v_1[n+4] &= v_2[n+3] =  &&\\& 
+x[n+2]+Cx[n+1]+(C^2-1)x[n]+CS(C^2-2)-&&\\&(C^2-1)R &&\\
+v_2[n+4] &= x[n+3]+2\cos{k\frac{2\pi}{N}}v_2[n+3]-v_1[n+3] = &&\\  & 
+x[n+3]+C(x[n+2]+Cx[n+1]+(C^2-1)x[n]+&&\\&
+CS(C^2-2)-(C^2-1)R)-x[n+1]-Cx[n]-&&\\&
+(C^2-1)S+CR = &&\\&
+x[n+3]+Cx[n+2]+(C^2-1)x[n+1]+C(C^2-2)x[n]+  &&\\&
+(C^4-2C^2-C^2+1)S-(C^3-2C)R
+\end{aligned}
+\end{myequation*}
+
+Zcela zjevně se dají naše dvě neznámé stavové proměnné nahradit třemi novými,
+zato známými. Každá rovnice se totiž dá nahradit výrazy:
+
+\begin{myequation}
+\begin{aligned}
+\label{vztah:mojevariacestavdosazeni}
+v_1[n+1] &= v_2[n] = w_0[n] + w_1[n]S-w_2[n]R, &&\\
+v_2[n+1] &= x[n] +Cv_2[n] - v_1[n] =&&\\& w_0[n+1] + w_1[n+1]S +w_2[n+1]R, &&\\
+\end{aligned}
+\end{myequation}
+  
+Vyskytuje se tu řada: $1,C,C^2-1,C^3-2C,C^4-2C^2-C^2+1,C^5-3C^3+C-C^3+2C$
+
+Při bližším prozkoumání této řady vidím, že má určitou zákonitost.
+Založím si tedy novou stavovou proměnnou, nazvu ji $w_3$. Začnu...
+\begin{myequation}
+\begin{aligned}
+\label{vztah:mojevariacestavw3}
+w_3[-1] &= 0 &&\\
+w_3[0] &= 1 &&\\
+w_3[1] &= C &&\\
+... &&\\
+w_3[n+1] &=  Cw_3[n]-w_3[n-1]&&\\
+... &&\\
+w_3[2] &= Cw_3[1]-w_3[0] = C^2-1&&\\
+w_3[3] &= Cw_3[2]-w_3[1] = C(C^2-1)-C = C^3-2C&&\\
+w_3[4] &= Cw_3[3]-w_3[2] = C(C^3-2C)-(C^2-1) =&&\\& C^4 - 3C^2 + 1&&\\
+w_3[5] &= Cw_3[4]-w_3[3] = C(C^4 - 3C^2 + 1)-(C^3-2C) =&&\\&
+C^5-3C^3+C-C^3+2C=C^5-4C^3+3C
+\end{aligned}
+\end{myequation}
+
+Pokud zkombinuji rovnice (\ref{vztah:mojevariacestav}) a (\ref{vztah:mojevariacestavdosazeni}), můžu si vyjádřit nové stavové proměnné
+$w_1$, $w_2$ a $w_3$. Začnu s $w_0$:
+
+\begin{myequation}
+\begin{aligned}
+\label{vztah:mojevariacestavw0_1}
+w_0[n] &= 0 &&\\
+w_0[n+1] &= x[n] &&\\
+w_0[n+2] &= x[n+1]+Cx[n] &&\\
+w_0[n+3] &= x[n+2]+Cx[n+1]+(C^2-1)x[n]&&\\
+w_0[n+4] &= x[n+3]+Cx[n+2]+(C^2-1)x[n+1]+C(C^2-2)x[n]
+\end{aligned}
+\end{myequation}
+
+Což mohu vyjádřit stavovou proměnnou $w_3$
+
+\begin{myequation}
+\begin{aligned}
+\label{vztah:mojevariacestavw0_2}
+w_0[n+1] &= w_3[0]x[n]&&\\
+w_0[n+2] &= w_3[0]x[n+1] + w_3[1]x[n]&&\\
+w_0[n+3] &= w_3[0]x[n+2] + w_3[1]x[n+1] + w_3[2]x[n]&&\\
+w_0[n+4] &= w_3[0]x[n+3] + w_3[1]x[n+2] + w_3[2]x[n+1] + w_3[3]x[n]&&\\
+\end{aligned}
+\end{myequation}
+
+Zkusím to opět rozložit podle vzorce (\ref{vztah:mojevariacestavw3}),což vede na původní tvar. Rovnice lze ale přeskládat tak, abych se dostal k rekurentní formuli.
+\\
+\begin{myequation}
+\begin{aligned}
+w_0[n+1] &= w_3[0]x[n]=x[n]&&\\
+w_0[n+2] &= w_3[0]x[n+1] + (Cw_3[0]-w_3[-1])x[n] = &&\\&
+Cw_3[0]x[n] + w_3[0]x[n+1] - w_3[-1]x[n] =&&\\&
+Cw_0[n+1]+x[n+1]&&\\
+w_0[n+3] &= w_3[0]x[n+2] + w_3[1]x[n+1] + (Cw_3[1]-w_3[0])x[n]=&&\\&
+w_3[0]x[n+2] +(Cw_3[0]-w_3[-1])x[n+1] + (Cw_3[0]-&&\\&
+w_3[-1])Cx[n]-w_3[0]x[n]=&&\\&
+x[n+2]+C(x[n+1]+Cx[n])-x[n] =&&\\&
+x[n+2] + Cw_0[n+2]-w_0[n+1]&&\\
+w_0[n+4] &= w_3[0]x[n+3] + w_3[1]x[n+2] + w_3[2]x[n+1] + &&\\&
+w_3[3]x[n] = x[n+3]+(Cw_3[0]-w_3[-1])x[n+2]+(Cw_3[1]&&\\&
+-w_3[0])x[n+1]+(Cw_3[2]-w_3[1])x[n]=&&\\&
+x[n+3]+Cx[n+2]+(C^2-1)x[n+1]+(C^3-2C)x[n]=&&\\&
+x[n+3]+C(x[n+2]+Cx[n+1]+C^2x[n]-x[n])-&&\\&
+Cx[n]-x[n+1] = x[n+4]+Cw_0[n+3]-w_0[n+2]
+\end{aligned}
+\end{myequation}
+
+Pokračuji s $w_1$:
+
+\begin{myequation}
+\begin{aligned}
+\label{vztah:mojevariacestavw1_1}
+w_1[n] &= 1 = w_3[0]&&\\
+w_1[n+1] &= C = w_3[1]&&\\
+w_1[n+2] &= C^2-1 = w_3[2]&&\\
+w_1[n+3] &= C^3-2C = w_3[3]&&\\
+w_1[n+4] &= C^4 - 3C^2 + 1 = w_3[4]
+\end{aligned}
+\end{myequation}
+
+což je již odvozené $w_3$. Proto tedy mohu napsat
+
+\begin{myequation}
+\begin{aligned}
+\label{vztah:mojevariacestavw1_2}
+w_1[n+1] &=  w_3[1] = Cw_1[0]-w_1[-1]
+\end{aligned}
+\end{myequation}
+
+
+A nakonec $w_2$:
+
+\begin{myequation}
+\begin{aligned}
+\label{vztah:mojevariacestavw2_1}
+w_2[n] &= 0 &&\\
+w_2[n+1] &= 1&&\\
+w_2[n+2] &= C&&\\
+w_2[n+3] &= C^2-1&&\\
+w_2[n+4] &= C^3-2C
+\end{aligned}
+\end{myequation}
+
+$w_2$ je posunuté $w_3$
+
+\begin{myequation}
+\begin{aligned}
+\label{vztah:mojevariacestavw2_2}
+w_2[n+1] &=  w_3[n] = w_1[n]
+\end{aligned}
+\end{myequation}
+
+Ještě je tu malý problém. Rekurentní vzorce pro $w_0$ a $w_1$ se odkazují nejen na poslední člen historie, ale i předposlední. Proto formálně zavedu nové stavové proměnné. Z pohledu procesoru je totiž stejně jedno, zda nějaké paměťové místo nazývám
+jako $w_4[n]$ nebo $w_0[n-1]$.
+
+\begin{myequation}
+\begin{aligned}
+\label{vztah:mojevariacestavodvozene}
+w_4[n+1] &= w_0[n]&&\\
+w_0[n+1] &= x[n+1]+Cw_0[n]-w_0[n-1] =&&\\& x[n+1] + Cw_0[n] - w_4[n]&&\\
+w_2[n+1] &= w_1[n]&&\\
+w_1[n+1] &= Cw_1[n]-w_2[n]
+\end{aligned}
+\end{myequation}
+
+Vztahy pro $w_0$ a $w_4$, které jsem odvodil jsou vlastně vztahy Goertzelova algoritmu
+(\ref{vztah:geortzelstavrovnice}). Přibyly jen rovnice pro $w_1$ a $w_2$.
+Zajímavé je že $w_1$ a $w_2$ jsou jen konstanty a vůbec nezávisejí na vstupním
+signálu. To by ovšem znamenalo zjednodušení spojování těch mezivýsledků, co víc,
+$w_1$ a $w_2$ by se vůbec nemusely počítat  v tomto algoritmu, protože jsou již předem známé.
+
+
+Nyní zkusím malou kontrolu. Zkusím, zda výše uvedené vzorce předpovídají další
+hodnotu posloupnosti $v_2$, respektive, zda koeficienty u neznámých $R$ a $S$
+jsou z řady $w_3$.
+
+\begin{myequation}
+\begin{aligned}
+\label{vztah:mojevariacestav3}
+v_1[n+5] &= v_2[n+4] =  &&\\& 
+x[n+3]+Cx[n+2]+(c^2-1)x[n+1]+C(C^2-2)x[n]+  &&\\&
+(C^4-2C^2-C^2+1)S-(C^3-2C)R &&\\
+v_2[n+5] &= x[n+4]+2\cos{k\frac{2\pi}{N}}v_2[n+4]-v_1[n+4] = &&\\  & 
+x[n+4]+C(x[n+3]+Cx[n+2]+(c^2-1)x[n+1]+&&\\&
+C(C^2-2)x[n]+ (C^4-2C^2-C^2+1)S-(C^3-2C)R) - &&\\& 
+(x[n+2]+Cx[n+1]+(C^2-1)x[n]+CS(C^2-2)-&&\\&
+(C^2-1)R)=&&\\&
+[n+4]+Cx[n+3]+(C^2-1)x[n+2]+(c^3-2C)x[n+1]+&&\\&
+(C^4-2C^2-C^2+1)x[n]+(C^5-3C^3+C-C^3+2C)S-&&\\&
+(C^4-2C^2-C^2+1)R
+\end{aligned}
+\end{myequation}
+
+A na závěr vyzkouším, zda jsem předpověděl dobře novou stavovou
+proměnnou $w_0$.
+
+\begin{myequation}
+\begin{aligned}
+w_0[n+5] &= w_3[0]x[n+4] + w_3[1]x[n+3] + w_3[2]x[n+2] +&&\\&
+w_3[3]x[n+1] + w_3[4]x[n]= &&\\&
+x[n+4]+Cx[n+3]+(C^2-1)x[n+2]+&&\\&
+(C^3-2C)x[n+1]+(C^4-3C^2+1)x[n]=&&\\&
+x[n+4]+C(x[n+3]+Cx[n+2]+C^2x[n+1]-x[n+1]+&&\\&
+C^3x[n]-2Cx[n])-(x[n+2]+Cx[n+1]+C^2x[n]-&&\\&
+x[n])=x[n+4]+Cw_1[n+4]-w_1[n+3]
+\end{aligned}
+\end{myequation}
+
+Zkusím tedy malou rekapitulaci výše uvedeného.
+
+Mám signál o $N$ diskrétních hodnotách a chci jej počítat na $P$ procesorových jádrech. Pro jednoduchost budu předpokládat že $N$ je násobek $P$. Vlastně je
+úplně jedno, zda bloky, na které $N$-prvkový signál záhy rozdělím, jsou stejně dlouhé.
+Každopádně by měly být co možná nejvíce stejně dlouhé, protože celek bude pracovat efektivněji. Jako prerekvizity si spočítám $C= 2 \cos{2 \pi / N}$
+a spočítám si $w_1$ a $w_2$, které stačí spočítat jednou v případě, že všech $P$ bloků je stejně dlouhých.
+Na každém bloku signálu spočítám hodnoty podle vztahu
+(\ref{vztah:mojevariacestavodvozene}) $w_0$ a $w_4$, tedy klasickým způsobem
+Goertzelovým algoritmem, bez výpočtu výstupní proměnné $y$. Provedu tedy právě $N$ jednoduchých výpočtů.
+Nyní musím mezivýsledky nějak spojit. U každého mezivýsledku znám $w_0$, 
+$w_1$ i $w_2$. Mohu tedy napsat v souladu se vztahem (\ref{vztah:mojevariacestavdosazeni}).
+
+\begin{myequation}
+\begin{aligned}
+R[0] &= 0 &&\\
+S[0] &= 0 &&\\
+\end{aligned}
+\end{myequation}
+\begin{myequation}
+\begin{aligned}
+R[1] &= w_0[0] &&\\
+S[1] &= w_4[0] &&\\
+\end{aligned}
+\end{myequation}
+\begin{myequation}
+\begin{aligned}
+R[2] &= w_0[1] + w_1[1]R[1] - w_2[1]S[1] &&\\
+S[2] &= w_4[1] + w_1[1]R[1] - w_2[1]S[1] &&\\
+\end{aligned}
+\end{myequation}
+\begin{myequation}
+\begin{aligned}
+R[3] &= w_0[2] + w_1[2]R[2] - w_2[2]S[2] &&\\
+S[3] &= w_4[2] + w_1[2]R[2] - w_2[2]S[2] &&\\
+\end{aligned}
+\end{myequation}
+\begin{myequation}
+\begin{aligned}
+R[n+1] &= w_0[n] + w_1[n]R[n] - w_2[n]S[n] &&\\
+S[n+1] &= w_4[n] + w_1[n]R[n] - w_2[n]S[n] &&\\
+\end{aligned}
+\end{myequation}
+
+
+\section{Maticové operace}
+\label{kap:matrixoperations}
+
+Protože budu používat knihovnu openCL, která obvykle využívá výpočetní výkon
+grafické karty, je vhodné to nějakým způsobem využít. V grafických výpočtech
+se používají matice, druhého, třetího a čtvrtého řádu. Grafický čip je tedy pro
+výpočty s těmito maticemi optimalizován. Proto převedu předchozí úvahu do maticové
+terminologie. Začnu s přepsáním Goertzelova vztahu (\ref{vztah:geortzelstavrovnice}).
+\\
+Pro $v[1]$:\\
+
+\begin{myequation}
+%\begin{aligned}
+v[1] =
+\begin{pmatrix}
+v_1 [1] \\
+v_2 [1]
+\end{pmatrix}
+= Av[0] + Bx[0]= 
+\begin{pmatrix}
+0 & 1 \\
+-1 & C
+\end{pmatrix}
+\begin{pmatrix}
+v_1 [0] \\
+v_2 [0]
+\end{pmatrix}
++
+\begin{pmatrix}
+0 \\
+1
+\end{pmatrix}
+\begin{pmatrix}
+x[0] \\
+\end{pmatrix}
+%\end{aligned}
+\end{myequation}
+\\
+a pro $v[2]$
+\\
+\begin{myequation}
+\begin{multlined}
+v[2] =
+\begin{pmatrix}
+v_1 [2] \\
+v_2 [2]
+\end{pmatrix}
+= A(Av[0] + Bx[0])+Bx[1]= A^2\\ 
+\begin{pmatrix}
+v_1 [0] \\
+v_2 [0]
+\end{pmatrix}
++A
+\begin{pmatrix}
+0 \\
+1
+\end{pmatrix}
+\begin{pmatrix}
+x[0] \\
+\end{pmatrix}
++
+\begin{pmatrix}
+0 \\
+1
+\end{pmatrix}
+\begin{pmatrix}
+x[1] \\
+\end{pmatrix}
+\end{multlined}
+\end{myequation}
+\\
+\\
+ a nakonec zobecním. Vztah (\ref{vztah:maticovygoertzel}) je Goertzelův algoritmus
+ v maticovém zápisu.
+ \\
+
+\begin{myequation}
+\label{vztah:maticovygoertzel}
+\begin{multlined}
+v[n+1] =
+\begin{pmatrix}
+v_1 [n+1] \\
+v_2 [n+1]
+\end{pmatrix}
+= Av[n] + Bx[n]= \\
+\begin{pmatrix}
+0 & 1 \\
+-1 & C
+\end{pmatrix}
+\begin{pmatrix}
+v_1 [n] \\
+v_2 [n]
+\end{pmatrix}
++
+\begin{pmatrix}
+0 \\
+1
+\end{pmatrix}
+\begin{pmatrix}
+x[n] \\
+\end{pmatrix}
+\end{multlined}
+\end{myequation}
+\\
+Ten můžu volně přepsat:
+\\
+\begin{myequation}
+\begin{multlined}
+v[n+k] = \\
+A( A( \dots A( A( A(v[n])+Bx[n] )+Bx[n+1] )+Bx[n+2] )\dots )+\\
+Bx[n+k-1]) )+Bx[n+k] 
+\end{multlined}
+\end{myequation}
+\\
+Ještě to upravím tak, aby vstup $x$ byl jeden dlouhý sloupcový vektor.
+\\
+\begin{myequation}
+\begin{multlined}
+\label{vztah:maticovygoertzelfinal}
+v[n+k] = 
+\begin{pmatrix}
+v_1 [n+k] \\
+v_2 [n+k]
+\end{pmatrix}
+= A^k v[n] + \\
+\begin{pmatrix}
+A^{k-1}
+\begin{pmatrix}
+0 \\
+1
+\end{pmatrix}
+& A^{k-2}
+\begin{pmatrix}
+0 \\
+1
+\end{pmatrix}
+& A^{k-3}
+\begin{pmatrix}
+0 \\
+1
+\end{pmatrix}
+\dots
+\begin{pmatrix}
+0 \\
+1
+\end{pmatrix}
+\end{pmatrix}
+\begin{pmatrix}
+x[n] \\
+x[n+1]\\
+x[n+2]\\
+\vdots \\
+x[n+k]
+\end{pmatrix}
+=\\
+A^kv[n]+Dx[n,n+k]^T
+\end{multlined}
+\end{myequation}
+
+Tento vzorec, když si představím $k=3$, dává jasný návod, jak využít matice čtvrtého řádu. Oproti realizaci elementárními operacemi klesne počet maticových operací na čtvrtinu, protože počítám hned se čtyřmi hodnotami. Rovněž  popisuje spojovaní mezivýsledků z jednotlivých jader. Strana $Dx[n,n+k]^T$ je \emph{Goertzelův} vztah, a je k němu připočten předchozí mezivýsledek vynásobený maticí $A^{k-1}$, tedy konstantou známou před výpočtem. Něco takového jsem již odvodil pro případ počítání po jedné hodnotě $x$ (\ref{vztah:mojevariacestavodvozene}). Samotná matice $D$ je ale také konstanta, která se dá spočítat předem a při konstrukci programu toho využiji.
+
+\section{Počítání hodnot na více kmitočtech současně}
+\label{kap:multifrequency}
+
+Předchozí výsledky se dají ještě trochu vylepšit. Prvně nepotřebuji počítat celý horní řádek matice $A^k$. Dostanu z něj předchozí hodnotu a tu vlastně již znám. 
+Z toho druhého řádku mám (podle \ref{vztah:multikmitgoertzel}) počítám pro druhý řádek matice $A$ $v_2[n+1] = a_{21}v_1 + a_{22}v_2$. To je nyní první řádek matic ve vztahu \ref{vztah:multikmitgoertzel} s tím, že první index přes čárkou označuje index počítaného kmitočtu. Z maticových operací se stanou vektorové.
+
+Protože ale mám možnost počítat matice čtvrtého řádu, proč nevzít rovnou čtyři
+frekvence současně? Začnu s pravou stranou. Protože jsem v minulé větě uvedl, že stačí použít druhý řádek matice $D$, tak teď jej 3-krát zkopíruji do ostatních řádků.
+Stejný ale úplně nebude, jelikož konstanta C v sobě zahrnuje kmitočet, takže hodnoty v řádcích budou jiné. Na levé straně u matice $A^k$ provedu to stejné. Vektor $v[n]$
+rozšířím také 4-krát, ale do šířky. Výsledkem je matice, říkejme jí $E$, ze které je důležitý jen vektor na diagonále (kde jsou prováděny stejné operace), ostatní hodnoty jsou nenulové ale nejdou pro nás již potřebné.
+\\
+\begin{myequation}
+\label{vztah:multikmitgoertzel}
+\begin{multlined}
+v[n+3] = 
+\begin{pmatrix}
+v_{1,2} [n+3] \\
+v_{2,2} [n+3] \\
+v_{3,2} [n+3] \\
+v_{4,2} [n+3]
+\end{pmatrix}
+= \\
+\rm diag \left(
+\begin{pmatrix}
+a_{1,21}^k & a_{1,22}^k \\
+a_{2,21}^k & a_{2,22}^k \\
+a_{3,21}^k & a_{3,22}^k \\
+a_{4,21}^k & a_{4,22}^k \\
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+v_{1,1} & v_{2,1} & v_{3,1} & v_{4,1}\\
+v_{1,2} & v_{2,2} & v_{3,2} & v_{4,2}
+\end{pmatrix}
+\right) +\\
+\begin{pmatrix}
+C_1^3 - 2C_1 & C_1^2-1 & C_1 & 1 \\
+C_2^3 - 2C_2 & C_2^2-1 & C_2 & 1 \\
+C_3^3 - 2C_3 & C_3^2-1 & C_3 & 1 \\
+C_4^3 - 2C_4 & C_4^2-1 & C_4 & 1 \\
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+x[n] \\
+x[n+1]\\
+x[n+2]\\
+x[n+3]
+\end{pmatrix}
+\end{multlined}
+\end{myequation}
+\\
+$\rm diag(A^kv[n])$ jde ještě vyjádřit jako součet dvou vektorů.
+\\
+\begin{myequation}
+\begin{multlined}
+v[n+3] = 
+\begin{pmatrix}
+v_{1,2} [n+3] \\
+v_{2,2} [n+3] \\
+v_{3,2} [n+3] \\
+v_{4,2} [n+3]
+\end{pmatrix}
+=
+\begin{pmatrix}
+a_{1,21}^k \\
+a_{2,21}^k \\
+a_{3,21}^k \\
+a_{4,21}^k \\
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+v_{1,1} & v_{2,1} & v_{3,1} & v_{4,1}
+\end{pmatrix}
++\\
+\begin{pmatrix}
+a_{1,22}^k \\
+a_{2,22}^k \\
+a_{3,22}^k \\
+a_{4,22}^k \\
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+v_{1,2} & v_{2,2} & v_{3,2} & v_{4,2}
+\end{pmatrix}
++\\
+\begin{pmatrix}
+C_1^3 - 2C_1 & C_1^2-1 & C_1 & 1 \\
+C_2^3 - 2C_2 & C_2^2-1 & C_2 & 1 \\
+C_3^3 - 2C_3 & C_3^2-1 & C_3 & 1 \\
+C_4^3 - 2C_4 & C_4^2-1 & C_4 & 1 \\
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+x[n] \\
+x[n+1]\\
+x[n+2]\\
+x[n+3]
+\end{pmatrix}
+\end{multlined}
+\end{myequation}
+
+Kde první index je vždy číslo kmitočtu, druhý je index matice původní, neupravené ve vzorci \ref{vztah:maticovygoertzelfinal}.

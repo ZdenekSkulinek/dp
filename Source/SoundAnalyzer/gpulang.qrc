@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>graph_fragment.glsl</file>
+        <file>graph_vertex.glsl</file>
+        <file>goertzel.cl</file>
+    </qresource>
+</RCC>

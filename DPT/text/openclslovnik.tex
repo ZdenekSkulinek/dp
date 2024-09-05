@@ -1,0 +1,400 @@
+\chapter{Slovníček pojmů knihovny OpenCL}
+
+Tato kapitola je výtahem z dokumentace k openCL (\cite{opencl}).
+Úplnou dokumentaci lze najít \url{kronos.org}.
+
+\section{Application -- Aplikace}
+\label{sec:application}
+
+Kombinace programů běžících, jak na \emph{hostitelském zařízení (host device)} (viz termín \ref{sec:host}), tak na openCL \emph{zařízení (device)}  (viz termín \ref{sec:device}).
+
+\section{Blocking a Non-Blocking Enqueue API calls -- Blokující a~neblokující příkazy }
+\label{sec:blockunblocapicall}
+
+\emph{Neblokující} \emph{příkaz (command)} (viz termín \ref{sec:command}) ve frontě volání vloží \emph{příkaz} (viz termín \ref{sec:command}) do
+\emph{příkazové fronty} (viz termín \ref{sec:commandqueue}) a~okamžitě vrátí řízení \emph{hostiteli} (viz termín \ref{sec:host}). \emph{Blokující}
+příkaz ve frontě nevrátí řízení hostiteli, dokud není \emph{příkaz} (viz termín \ref{sec:command}) proveden.
+
+\section{Barrier  -- Bariéra}
+\label{sec:barrier}
+
+Jsou dva druhy \emph{bariér (barriers)} (viz termín \ref{sec:barrier}) -- bariéra \emph{fronty zpráv} (viz termín \ref{sec:commandqueue}) a~
+bariéra \emph{pracovní skupiny (work-group)} (viz termín \ref{sec:workgroup}). 
+\begin{itemize}
+\item \emph{OpenCL API} poskytuje
+funkci zařazení \emph{bariéra fronty zpráv} (viz termín \ref{sec:commandqueuebarrier}). Tento příkaz zajistí, že
+předchozí příkazy jsou provedeny před tím, než začne příkaz následující.
+\item \emph{OpenCL C} programovací jazyk poskytuje vestavěnou funkci \emph{bariéra pracovní skupiny} (viz termín \ref{sec:workgroupbarrier}). Tato bariéra může býti volána \emph{jádrem (kernel)} (viz termín \ref{sec:kernel}) pro zajištění
+synchronizace mezi \emph{pracovními členy (work-items)} (viz termín \ref{sec:workitem}) v~\emph{pracovních skupinách} (viz termín \ref{sec:workgroup}) provádějících \emph{jádra} (viz termín \ref{sec:kernel}). Všechny \emph{pracovní členy} v~\emph{pracovní skupině}
+musí provést tuto synchronizaci, než bude možno pokračovat v~provádění následujících příkazů.
+\end{itemize}
+
+
+
+\section{Buffer object  -- Buffer}
+\label{sec:buffer}
+Buffer je paměťový objekt, ve kterém je uložena souvislá řada bytů. Tento buffer
+je přístupný použitím ukazatele z \emph{jádra} prováděném na~\emph{zařízení}. S~těmito buffery
+může býti manipulováno použitím OpenCL API funkcí. Buffer zapouzdřuje následující
+informace:
+
+\begin{itemize}
+\item Velikost v~bytech.
+\item Parametry popisující uložení v~paměti a~ve které oblasti je alokován.
+\item Buffer data.
+\end{itemize}
+
+\section{Built-in kernel -- Vestavěné jádro}
+\label{sec:builtinkernel}
+
+\emph{Vestavěné jádro} je je \emph{jádro} (viz termín \ref{sec:kernel}) prováděné na~openCL \emph{zařízení} (viz termín \ref{sec:device}) nebo \emph{speciálním zařízení (custom device)} (viz termín \ref{sec:customdevice}) pevně daným hardwarem nebo firmwarem. Aplikace může používat \emph{vestavěná jádra} nabízená \emph{zařízeními} nebo \emph{speciálními zařízeními}. \emph{Objekty programů 
+(program objects)} (viz termín \ref{sec:programobject}) mohou obsahovat jen \emph{jádra} napsané v~jazyce openCL C nebo \emph{vestavěná jádra}, ale nikdy ne obojí. Více viz \emph{jádra} (viz termín \ref{sec:kernel}) a~\emph{programy} (viz termín \ref{sec:program}).
+
+\section{Command -- Příkaz}
+\label{sec:command}
+Operace v~openCL jsou posílány k provedení do \emph{fronty příkazů (command queue)} (viz termín \ref{sec:commandqueue}).
+Například openCL \emph{příkazy} (viz termín \ref{sec:command}) pověřují \emph{jádra (kernels)} (viz termín \ref{sec:kernel}) k provedení
+na~\emph{výpočetním zařízení} (viz termín \ref{sec:device}), manipulaci s~paměťovými objekty atd.
+
+\section{Command Queue -- Fronta příkazů}
+\label{sec:commandqueue}
+\emph{Fronta příkazů (command queue)} (viz termín \ref{sec:commandqueue}) je objekt ve kterém jsou uloženy příkazy,
+které budou vykonány na~určitém \emph{zařízení} (viz termín \ref{sec:device}). \emph{Fronta příkazů} (viz termín \ref{sec:commandqueue}) je vytvořena 
+na~určitém \emph{zařízení} s~určitým \emph{kontextem (context)} (viz termín \ref{sec:context}). \emph{Příkazy} (viz termín \ref{sec:command}) jsou zařazeny
+do \emph{fronty příkazů} (viz termín \ref{sec:commandqueue})  v~pořadí, ale vykonat se mohou v~tomto pořadí nebo
+v pořadí jiném. Více viz \emph{provádění v~pořadí (in-order execution)} (viz termín \ref{sec:inorderexecution})  a
+\emph{provádění mimo pořadí (out-order execution)} (viz termín \ref{sec:outoforderexecution}).
+
+
+\section{Command Queue Barrier -- Bariéra fronty příkazů}
+\label{sec:commandqueuebarrier}
+
+Více na~\emph{bariéra (barrier)}  (viz termín \ref{sec:barrier}).
+
+
+\section{Compute device memory -- Paměť výpočetního zařízení}
+\label{sec:computedevicememory}
+
+Jedno \emph{zařízení} (viz termín \ref{sec:device}) může mít připojeno jednu nebo více pamětí.
+
+\section{Compute unit -- Výpočetního jednotka}
+\label{sec:computeunit}
+
+OpenCL \emph{zařízení} (viz termín \ref{sec:device}) může mít jednu nebo více \emph{výpočetních jednotek (compute units)} (viz termín \ref{sec:computeunit}). \emph{Pracovní skupina (work-group)} (viz termín \ref{sec:workgroup}) je provedena na~jedné výpočetní jednotce. Výpočetní jednotka je tvořena jedním nebo více \emph{procesorovým prvkem 
+(processing element)} (viz termín \ref{sec:processingelement}) a~\emph{lokální pamětí (local memory)} (viz termín \ref{sec:localmemory}). Výpočetní jednotka
+také může obsahovat filtr textur, který může být přístupný z  \emph{procesorových prvků} (viz termín \ref{sec:processingelement}).
+
+
+\section{Concurrency -- Souběžnost}
+\label{sec:concurrency}
+
+Vlastnost systému, ve kterém je nějaká skupina úloh současně aktivní a~provádí nějakou akci. Pro využití \emph{souběžného provádění} (viz termín \ref{sec:concurrency}) programů, musí programátor
+identifikovat možné problémy \emph{souběžného} zpracování, zahrnout je do svých zdrojových
+kódů a~využít synchronizačních možností zařízení.
+
+\section{Constant memory -- Paměť konstant}
+\label{sec:constantmemory}
+Oblast v~paměti přístupná \emph{jádru} (viz termín \ref{sec:kernel}), která je za~běhu \emph{jádra} konstantní. Tuto paměť alokuje i inicializuje 
+\emph{hostitel} (viz termín \ref{sec:host}).
+
+\section{Context -- Kontext}
+\label{sec:context}
+
+Prostředí, ve kterém se provádí \emph{jádra} (viz termín \ref{sec:kernel}) a~doména,
+ke které se váží synchronizační a~\emph{paměťové objekty} (viz termín \ref{sec:memoryobjects}).
+Kontext zahrnuje množinu \emph{zařízení}, příslušnou paměť
+k těmto \emph{zařízením}, proměnné vázající se k těmto pamětem a~jednu nebo více \emph{front příkazů} (viz termín \ref{sec:commandqueue}).
+
+\section{Custom device -- Speciální zařízení}
+\label{sec:customdevice}
+
+\emph{Speciální zařízení} má podporu openCL runtime, ale není možné pro něj psát programy v~openCL C.
+Tyto zařízení jsou obvykle vysoce efektivní pro
+určité typy úloh. Mohou mít vlastní překladač.
+Pokud ho nemají, je možné spouštět pouze
+\emph{vestavěná jádra} (viz termín \ref{sec:builtinkernel}).
+
+\section{Data parallel programming model
+-- Datový paralelní programovací model}
+\label{sec:dataparallelprogrammingmodel}
+
+Tradičně je tím myšlen model, kde je jeden
+program spuštěn souběžně na~řadě stejných
+objektů.
+
+\section{Device -- Zařízení}
+\label{sec:device}
+
+\emph{Zařízení} je množina \emph{výpočetních jednotek} (viz termín \ref{sec:computeunit}). 
+Každá jednotka má \emph{fronty příkazů} (viz termín \ref{sec:commandqueue}). Příkazy
+mohou například spouštět \emph{jádra} (viz termín \ref{sec:kernel}) nebo zapisovat a~číst \emph{paměťové objekty} (viz termín \ref{sec:memoryobjects}). Příkladem takovéhoto \emph{zařízení} je \emph{GPU}, vícejádrové \emph{CPU} nebo například \emph{DSP}.
+
+
+\section{Event object -- Objekt události}
+\label{sec:eventobject}
+
+\emph{Objekt události} zapouzdřuje status operace, jako například nějakého \emph{příkazu} (viz termín \ref{sec:command}). Může být využit
+k synchronizaci operací v~rámci \emph{kontextu} (viz termín \ref{sec:context}).
+
+\section{Event wait list -- Seznam čekajících událostí}
+\label{sec:eventwaitlist}
+
+Je seznam \emph{objektů událostí} (viz termín \ref{sec:eventobject}) který může být využit k řízení začátku provádění dílčího
+\emph{příkazu} (viz termín \ref{sec:command}).
+
+\section{Framework -- Framework}
+\label{sec:framework}
+
+Je několik softwarových balíků umožňujících
+vývoj software. Obvykle zahrnuje knihovny, API,
+\emph{runtime} prostředí, překladače a~podobně.
+
+\section{Global ID -- Globální ID}
+\label{sec:globalid}
+
+Global ID jednoznačně specifikuje \emph{pracovní položka} (viz termín \ref{sec:workitem}) a~je založen na~počtu globálních \emph{pracovních položek} a~je dán před spuštěním \emph{jader} (viz termín \ref{sec:kernel}). Global ID je $N$-rozměrný vektor začínající (0,0,...0). Více na~\emph{Lokální ID} (viz termín \ref{sec:localid}).
+
+\section{Global memory -- Globální paměť}
+\label{sec:globalmemory}
+
+Tato paměť je přístupná \emph{pracovním položkám} (viz termín \ref{sec:workitem}) prováděných v~rámci \emph{kontextu} (viz termín \ref{sec:context}). Z \emph{hostitele} může být přístupný pomocí \emph{příkazů} jako číst, zapisovat a~mapovat.
+
+
+\section{GL share group -- Sdílená GL skupina}
+\label{sec:glsharegroup}
+
+Sdílená GL skupina je objekt pro správu sdílených prostředků s~knihovnami openGL a~openGL ES.
+Například tam patří textury, buffery, framebuffery a~je asociována s~jedním nebo více openGL kontexty.
+Sdílený GL objekt je obvykle zástupný objekt na~není
+přímo přístupný.
+
+\section{Handle -- Rukojeť}
+\label{sec:handle}
+
+Zástupný typ ukazující na~objekty ve správě openCL.
+Každá operace  na~nějakém objektu je určena \emph{rukojetí} na~tento objekt.
+
+\section{Host -- Hostitel}
+\label{sec:host}
+
+\emph{Hostitel} komunikuje s~openCL API prostřednicvím \emph{kontextu} (viz termín \ref{sec:context}).
+
+\section{Host pointer -- Ukazatel hostitele}
+\label{sec:hostpointer}
+
+Ukazatel na~paměť, která je ve virtuálním adresovém prostoru \emph{hostitele}.
+
+\section{Illegal -- Nedovolený}
+\label{sec:illegal}
+
+Chování systému, které není výslovně dovoleno, bude
+nahlášeno jako chyba systému openCL.
+
+\section{Image object -- Obrázek}
+\label{sec:imageobject}
+
+\emph{Obrázek} (viz termín \ref{sec:imageobject}) má dvou nebo tří dimenzionální pole, rozměry atd. Data lze modifikovat pomocí funkcí čtení a~zápisu. Operace čtení využívá \emph{vzorkovač (sampler)} (viz termín \ref{sec:sampler}).
+
+\section{Implementation defined -- Implementačně závislé}
+\label{sec:implementationdefined}
+
+Chování, kde je výslovně povolena nějaká odlišnost od openCL rozhraní. V~těchto případech je povinná dobrá dokumentace výrobce.
+
+\section{In-order execution -- Provádění v~pořadí}
+\label{sec:inorderexecution}
+
+Model provádění, kde \emph{příkazy} ve \emph{frontě příkazů} (viz termín \ref{sec:commandqueue}) jsou prováděny jeden za~druhým, 
+\emph{příkaz} (viz termín \ref{sec:command}) je vždy dokončen před započetím \emph{příkazu} následujícího.
+
+\section{Kernel -- Jádro}
+\label{sec:kernel}
+
+\emph{Kernel (jádro)} je funkce definovaná v~programu
+a~označená identifikátorem \qualifiername{kernel} nebo \qualifiername{\_\_kernel}.
+
+\section{Kernel object -- Objekt jádra}
+\label{sec:kernelobject}
+
+\emph{Objekt jádra (kernel object)} zapouzdřuje \emph{jádro} (viz termín \ref{sec:kernel}) (funkci definovanou s~kvalifikátorem \qualifiername{\_\_kernel}) a~vstupní argument.
+
+\section{Local ID -- Lokální ID}
+\label{sec:localid}
+
+Lokální ID jednoznačně specifikuje \emph{pracovní položka} (viz termín \ref{sec:workitem}) v~rámci \emph{pracovní skupiny} (viz termín \ref{sec:workgroup}). 
+Lokální ID je $N$-rozměrný vektor začínající (0,0,...0). Více na~\emph{Globální  ID} (viz termín \ref{sec:globalid}).
+
+\section{Local memory -- Lokální paměť}
+\label{sec:localmemory}
+
+
+Tato paměť je přístupná \emph{pracovním položkám} (viz termín \ref{sec:workitem}) prováděných v~rámci \emph{pracovní skupiny} (viz termín \ref{sec:workgroup}).
+
+\section{Marker -- Značka}
+\label{sec:marker}
+
+Je \emph{příkaz} zařazený ve \emph{frontě příkazů} (viz termín \ref{sec:commandqueue}), který označí všechny předchozí \emph{příkazy} (viz termín \ref{sec:command})
+ve \emph{frontě příkazů} a~jeho výsledkem je \emph{událost} (viz termín \ref{sec:eventobject}), kterou může poslouchat aplikace, 
+a~tak počkat na~všechny \emph{příkazy} zařazené před
+\emph{značkou} ve \emph{frontě zpráv}.
+
+\section{Memory objects -- Paměťové objekty}
+\label{sec:memoryobjects}
+
+\emph{Paměťový objekt} je \emph{rukojeť} -- ukazatel na~nějakou oblast v~globální paměti. Používá se \emph{počítadlo odkazů (reference counting)} (viz termín \ref{sec:referencecount}). Více na
+\emph{buffer} (viz termín \ref{sec:buffer}) nebo \emph{obrázek} (viz termín \ref{sec:imageobject}).
+
+\section{Memory regions (pools) -- 
+Paměťové oblasti}
+\label{sec:pools}
+
+V openCL jsou různé adresové prostory. Paměťové oblasti mohou překrývat ve fyzické paměti, ale
+openCL je bere jako logicky různé. Paměťové oblasti
+mohou být označeny jako \qualifiername{private}, \qualifiername{local}, \qualifiername{constant}
+a~\qualifiername{global}.
+
+\section{Object -- Objekt}
+\label{sec:object}
+
+Objekty jsou abstraktní reprezentace \emph{zdrojů (resources)} (viz termín \ref{sec:resource}) a~může s~nimi býti manipulováno pomoci openCL API. Například lze uvést
+\emph{objekt programu} (viz termín \ref{sec:programobject}), \emph{objekt jádra} (viz termín \ref{sec:kernelobject}) a~
+\emph{paměťový objekt} (viz termín \ref{sec:memoryobjects}).
+
+\section{Out-of-order execution -- Provádění mimo pořadí}
+\label{sec:outoforderexecution}
+
+Model provádění, kde \emph{příkazy} (viz termín \ref{sec:command}) vložené ve \emph{frontě příkazů} (viz termín \ref{sec:commandqueue}) jsou prováděny v~libovolném pořadí. Je ovšem respektován \emph{seznam čekajících událostí} (viz termín \ref{sec:eventwaitlist}) a~\emph{bariéra fronty zpráv} (viz termín \ref{sec:commandqueuebarrier}). Viz \emph{provádění v~pořadí} (viz termín \ref{sec:inorderexecution}).
+
+\section{Parent device -- Rodičovské zařízení}
+\label{sec:parentdevice}
+
+OpenCL \emph{zařízení} (viz termín \ref{sec:device}) může být rozděleno na~další \emph{subzařízení} (viz termín \ref{sec:subdevice}).
+Protože i \emph{subzařízení} může být dále děleno na~\emph{subzařízení}, nemusí být \emph{rodičovské zařízení} vždy \emph{kořenové zařízení (root device)} (viz termín \ref{sec:rootdevice}).
+
+\section{Platform -- Platforma}
+\label{sec:platform}
+
+Je \emph{hostitel} (viz termín \ref{sec:host}) a~jedno nebo několik openCL \emph{zařízení} (viz termín \ref{sec:device}) které mohou být ovládány openCL \emph{frameworkem} (viz termín \ref{sec:framework}). Tento \emph{framework} umí mezi zařízeními sdílet zdroje a~provádět \emph{jádra} (viz termín \ref{sec:kernel}) na~\emph{zařízení} v~rámci \emph{platformy}.	
+
+\section{Private memory -- Soukromá paměť}
+\label{sec:privatememory}
+
+Oblast v~paměti vyhrazená výhradně pro \emph{pracovní položku} (viz termín \ref{sec:workitem}). Proměnné
+zde definované nemohou býti viděny z jiné \emph{pracovní položky}.
+
+\section{Processing element  -- Zpracující jednotka}
+\label{sec:processingelement}
+
+Virtuální skalární procesor. \emph{Pracovní položka} (viz termín \ref{sec:workitem}) může být prováděna na~jedné
+nebo více \emph{zpracujících jednotkách} (viz termín \ref{sec:computeunit}).
+
+\section{Program -- Program}
+\label{sec:program}
+
+OpenCL \emph{program} (viz termín \ref{sec:program}) se skládá z množiny \emph{jader} (viz termín \ref{sec:kernel}). \emph{Programy} mohou
+také obsahovat pomocné funkce volané z \qualifiername{\_\_kernel} funkcí  a
+konstantní data.
+
+\section{Program object -- Programový objekt}
+\label{sec:programobject}
+
+\emph{Programový objekt} zapouzdřuje následující informace:
+
+\begin{itemize}
+\item Ukazatel na~odpovídající \emph{kontext} (viz termín \ref{sec:context}).
+\item Zdrojový text nebo binární kód programu.
+\item Poslední úspěšně přeložený proveditelný program, seznam \emph{zařízení} (viz termín \ref{sec:device}),
+pro které byl přeložen, nastavení překladače a~log.
+\item Několik připojených \emph{objektů jader} (viz termín \ref{sec:kernelobject}).
+\end{itemize}
+
+\section{Reference count -- Počítadlo odkazů}
+\label{sec:referencecount}
+
+Životní cyklus objektů v~openCL je dán \emph{počítadlem odkazů} (viz termín \ref{sec:referencecount}) na~tento objekt.
+Když vytvoříte openCL objekt, \emph{počítadlo odkazů} se nastaví na~1. Příslušný
+\emph{retain (přivlastni)} (viz termín \ref{sec:retainrelease}) jako \functionname{clRetainContext}, \functionname{clRetainCommandQueue} zvyšují hodnotu tohoto počítadla. Volání
+\emph{release (uvolni)} (viz termín \ref{sec:retainrelease}) jako například \functionname{clReleaseContext} nebo 
+\functionname{clReleaseCommandQueue} toto počítadlo snižují o~1. Když \emph{
+počítadlo odkazů} klesne na~nulu, objekt je dealokován.
+
+\section{Relaxed consistency -- Rozvolněná soudržnost}
+\label{sec:relaxedconsistency}
+
+Model soudržnosti paměti, ve kterém je viditelnost pro jiné \emph{pracovní položky} (viz termín \ref{sec:workitem})
+nebo \emph{příkazy} (viz termín \ref{sec:command}) různá. Výjimkou jsou synchronizační objekty, jako třeba 
+\emph{bariéry} (viz termín \ref{sec:barrier}).
+
+\section{Resource -- Zdroj}
+\label{sec:resource}
+
+Je třída \emph{objektů} (viz termín \ref{sec:object}) definovaná v~openCL. Instance \emph{zdroje} je \emph{objekt}.
+Zdroji obyčejně rozumíme \emph{kontexty} (viz termín \ref{sec:context}), \emph{fronty příkazů} (viz termín \ref{sec:commandqueue}), \emph{programové objekty} (viz termín \ref{sec:programobject}), \emph{objekty jádra} (viz termín \ref{sec:kernelobject}) a~\emph{paměťové objekty} (viz termín \ref{sec:memoryobjects}). Výpočetní \emph{zdroje}
+jsou hardwarové součásti využívající čítač instrukcí. Jako příklad lze uvést
+\emph{hostitele} (viz termín \ref{sec:host}), \emph{zařízení} (viz termín \ref{sec:device}), \emph{výpočetní jednotky (compute units)} (viz termín \ref{sec:computeunit}) nebo \emph{zpracující jednotky (processing elements)} (viz termín \ref{sec:processingelement}).
+
+\section{Retain, release -- Přivlastni, uvolni}
+\label{sec:retainrelease}
+
+Pojmenování akce inkrementace(\emph{retain}) (viz termín \ref{sec:retainrelease}), nebo dekrementace(\emph{release}) (viz termín \ref{sec:retainrelease}) \emph{počítadla odkazů} (viz termín \ref{sec:referencecount}). Zajišťuje, že objekt nebude smazán, dokud nejsou hotovy
+všechny procesy, které jej používají. Viz \emph{počítadlo odkazů} (viz termín \ref{sec:referencecount}).
+
+\section{Root device -- Kořenové zařízení}
+\label{sec:rootdevice}
+
+\emph{Kořenové zařízení} je openCL \emph{zařízení} (viz termín \ref{sec:device}), které není rozdělená část jiného \emph{zařízení}. Více viz \emph{zařízení} a~\emph{rodičovské zařízení} (viz termín \ref{sec:parentdevice}).
+
+\section{Sampler -- Vzorkovač}
+\label{sec:sampler}
+
+\emph{Objekt} (viz termín \ref{sec:object}), který popisuje jak se má navzorkovat obrázek, když je čten \emph{jádrem} (viz termín \ref{sec:kernel}). Funkce čtoucí obrázky mají \emph{vzorkovač} jako svůj argument.
+\emph{Vzorkovačem} se definuje adresní mód, což je chování v~případě, že se souřadnice v~obrázku nacházejí mimo jeho rozměry.  Jako další jsou případy, kdy jsou souřadnice obrázku normalizované a~nenormalizované hodnoty a~filtrační mód.
+
+\section{SIMD:Single instruction multiple data -- SIMD}
+\label{sec:simd}
+
+Programovací model, kde \emph{jádro} (viz termín \ref{sec:kernel}) je prováděno současně na~více \emph{zpracujících jednotkách} (viz termín \ref{sec:computeunit}), každá z nich má svá vlastní data a~společně sdílejí jeden čítač instrukcí. Všechny \emph{zpracující jednotky} provádějí naprosto stejnou množinu instrukcí.
+
+\section{SPMD: Single program multiple data -- SPMD}
+\label{sec:spmd}
+
+Programovací model, kde \emph{jádro} (viz termín \ref{sec:kernel}) je prováděno současně na~více \emph{zpracujících jednotkách} (viz termín \ref{sec:computeunit}). Každá z nich má svůj vlastní čítač instrukcí. \emph{Zpracující jednotky} mohou mít množinu instrukcí různou.
+
+\section{Sub-device -- Subzařízení}
+\label{sec:subdevice}
+
+OpenCL \emph{zařízení} (viz termín \ref{sec:device}) může být rozděleno do více \emph{subzařízení} podle rozdělovacího plánu. Nová \emph{subzařízení} alias specifické skupiny \emph{výpočetních jednotek} (viz termín \ref{sec:computeunit}) v~rámci
+\emph{rodičovského zařízení} (viz termín \ref{sec:parentdevice}) mohou býti použita stejně jako jejich \emph{rodičovská zařízení}. Rozdělení \emph{rodičovského zařízení} na~\emph{subzařízení} nezničí toto \emph{rodičovské zařízení}, které může být průběžně dále používáno současně se \emph{subzařízeními}. Viz také \emph{zařízení} (viz termín \ref{sec:device}), \emph{rodičovské zařízení} (viz termín \ref{sec:parentdevice}) a~\emph{kořenové zařízení} (viz termín \ref{sec:rootdevice}).
+
+\section{Task parallel programming model -- Paralelně úlohový programovací model}
+\label{sec:taskparallelprogrammingmodel}
+
+Programovací model, kde jsou výpočty vyjádřeny podmínkami více \emph{souběžných} (viz termín \ref{sec:concurrency}) úloh. Úloha je zde \emph{jádro} (viz termín \ref{sec:kernel}) v~jedné \emph{pracovní skupině} (viz termín \ref{sec:workgroup}) o~velikosti jedna. Souběžné úlohy mohou provádět různá \emph{jádra}.
+
+\section{Thread-safe -- Vláknově bezpečné}
+\label{sec:threadsafe}
+
+OpenCL je považováno za~\emph{vláknově bezpečné}, pokud interní stav, který je spravován knihovnou openCL, zůstává konzistentní i v~případě, že \emph{hostitel} (viz termín \ref{sec:host}) volá
+z více vláken. OpenCL API, které jsou \emph{vláknově bezpečné}, dovolují aplikaci volat tyto funkce z více současné probíhajících vláken bez použití \emph{mutexu}. Říkáme pak, že jsou i \emph{reentratní (re-entrant-safe)}.
+
+
+\section{Undefined -- Nedefinováno}
+\label{sec:undefined}
+
+Chování volání openCL API, kde \emph{vestavěná funkce} (viz termín \ref{sec:builtinkernel}) uvnitř \emph{jádra} (viz termín \ref{sec:kernel}) není výslovně definována. Po implementaci openCL není požadováno definovat, co se stane, když je tato funkce použita.
+
+\section{Work group -- Pracovní skupina}
+\label{sec:workgroup}
+
+Skupina \emph{pracovních položek} (viz termín \ref{sec:workitem}), které jsou vykonávány na~jedné \emph{výpočetní jednotce} (viz termín \ref{sec:computeunit}). \emph{Pracovní položky} ve skupině provádějí stejné \emph{jádro} (viz termín \ref{sec:kernel}) a~sdílejí \emph{lokální paměť} (viz termín \ref{sec:localmemory}) a~\emph{bariéry pracovní skupiny} (viz termín \ref{sec:workgroupbarrier}).
+
+\section{Work group barrier -- Bariéra pracovní skupiny}
+\label{sec:workgroupbarrier}
+
+Viz \emph{bariéra} (viz termín \ref{sec:barrier}).
+
+\section{Work-Item -- Pracovní položka}
+\label{sec:workitem}
+
+Jedna z množiny paralelního provádění \emph{jádra} (viz termín \ref{sec:kernel}) spuštěná na~\emph{zařízení} (viz termín \ref{sec:device}) \emph{příkazem} (viz termín \ref{sec:command}). \emph{Pracovní položka} je prováděna na~jedné nebo více \emph{zpracujících jednotkách} (viz termín \ref{sec:computeunit}) jako část provádění \emph{pracovní skupiny} (viz termín \ref{sec:workgroup}) prováděné na~\emph{výpočetní jednotce}. \emph{Pracovní položka} je rozeznávána mezi jinými ve skupině svým \emph{lokálním ID} (viz termín \ref{sec:localid}) a~\emph{globálním ID} (viz termín \ref{sec:globalid}).
+
+

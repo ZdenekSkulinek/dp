@@ -1,0 +1,140 @@
+\chapter{Instalace projektu - spuštění aplikace}
+\label{kap:instalaceprogramu}
+
+K aplikaci není přiložen žádný instalační program. Není potřeba. Spouští se jen spustitelným souborem \emph{SoundAnalyzer} v adresáři téhož jména. Zabalený archiv s~programem naleznete na přiloženém CD disku. Stačí jej jen rozbalit.
+
+
+Nicméně pro správnou funkci je třeba mít správně nainstalované knihovny \emph{OpenCL} a \emph{OpenGL}. Knihovny \emph{OpenGL} a \emph{OpenCL} dodává výrobce grafické karty, tudíž je problematické napsat nějaký návod na její nainstalování, nebo dokonce nějaký instalační skript. Obecně lze říci, že v linuxu je lepší používat proprietární ovladače od výrobců grafických čipů něž ovladače volně šiřitelné. Jejich instalace ale může přinést potíže, mně třeba pokus o instalaci ovladače od NVidie způsobil nefunkčnost operačního systému a musel jsem tento znovu nainstalovat.
+
+\section{GPU AMD}
+
+Na \url{http://support.amd.com/en-us/download/linux} lze stáhnout ovladač \emph{fglrx}. S jeho instalací jsem neměl žádné problémy. Možná bude potřeba nainstalovat i~\emph{OpenCL} z adresy \href{http://developer.amd.com/tools-and-sdks/opencl-zone/amd-accelerated-parallel-processing-app-sdk/}{developer.amd.com} a je rovněž na přiloženém CD nosiči. Instalace je bez problémů.
+
+\section{GPU NVidia}
+
+Ovladač Nvidia je nyní ve standardním repozitáři Ubuntu a Mint a to v poslední verzi \emph{375}. Když instalujete nové Ubuntu nebo Mint, je třeba před instalací spustit správce ovladačů a vybrat \uv{používat NVidia 340}. Když Linux nainstalujete a připojíte k síti a opět spustíte výše jmenovaný program, nabídne vám již aktuální verzi \emph{375}. OpenCl je součátí CUDA a je také ve standardním repozítáři.
+Nainstalujete zadáním:
+
+\begin{Verbatim} 
+sudo apt-get install libcuda1-375
+\end{Verbatim}
+
+\chapter{Instalace projektu - pokračování ve vývoji}
+\label{kap:instalace}
+
+\section{Instalace GNU C++}
+
+Přestože knihovny \emph{OpenCV} a \emph{OpenCL} jsou multiplatformní, rozhodl jsem se pro operační systém Linux, distribuce Mint 17. Vyhnul jsem se konstrukcím platformně závislým, takže je možná přenositelnost na jiné operační systémy. Jako překladač jsem zvolil \emph{GCC}, a to ze stejného důvodu jako předchozí, je platformně nezávislý a~je v každé distribuci Linuxu jako jeden ze základních balíčků. Mně stačilo
+k instalaci napsat:
+
+\begin{verbatim}
+sudo apt-get install build-essential
+\end{verbatim}
+
+a potom...
+
+\begin{Verbatim}
+sudo apt-get install g++
+\end{Verbatim}
+
+
+Pro Windows existuje disrtibuce GNU cygwin, kterou je možno stáhnout a nainstalovat z webu \url{sourceware.org/cygwin}.
+
+
+Důležité je nezapomenout zaškrtnout \emph{devel} a \emph{debug} v seznamu balíčků k instalaci.
+
+
+
+\section{Verzovací systém Git}
+
+Verzovací systém Git používám nejen v zaměstnání, ale i v domácích
+projektech a~má své místo i v této práci. Může být důležité moci se v případě
+nutnosti vrátit k~předchozím verzím projektu.
+
+Git je standardní balíček snad všech distribucí. Instaluje je jako obvykle napsáním
+
+\begin{Verbatim} 
+sudo apt-get install git
+\end{Verbatim}
+
+S klíči se zachází standardním způsobem, měly by být uloženy v
+adresáři \functionname{\textasciitilde/.ssh}.
+
+Vytvořil jsem speciální repozitář na svém testovacím serveru.
+Přihlašovat se jde výhradně pomocí klíče, který najdete na CD--příloze této práce. Projekt stačí už jen naklonovat příkazem,
+
+\begin{Verbatim} 
+git clone virtualbox@46.167.245.175:dp
+\end{Verbatim}
+
+přesněji, pomocí klíče na CD
+
+\begin{Verbatim} 
+ssh-agent sh -c 'ssh-add <cesta>/virtualbox_rsa;
+git clone virtualbox@46.167.245.175:dp'
+\end{Verbatim}
+
+
+\section{Qt Creator}
+
+
+Qt Creator je nedílnou součástí vývojového kitu knihovny Qt. Nyní je již verze
+5.8, já jsem ale použil verzi 5.5.1, která je podporována ve standardních repozitářích linuxu, konkrétně jsem vyzkoušel Mint 18.1 a Ubuntu 16.04.
+
+Instalační baliček je součástí přiloženého CD a je možné ho rovněž stáhnout ze stránek \url{qt.io}.
+
+
+Celá aplikace je napsaná v prostředí \emph{Qt Creator}. \emph{Qt creator} má problémy s~vizuálním návrhářem, a to takové, že je zcela nepoužitelný a layout dialogů je nutné psát textově v jazyce /emph{qml}. Stále je však možno použít prostředí \emph{QtCreatoru} pro psaní textu a překlad programu.
+
+
+\section{OpenGL}
+
+
+Instalaci proprietárního ovladače a knihovny \emph{OpenGL} jsem popsal v kapitole \emph{instalace programu} \ref{kap:instalaceprogramu}.
+
+Tím ale máme v systému knihovny, nikoli už ale  hlavičkové soubory pro jejich použití. Já jsem napsal pro začátek vývoje v OpenGL toto:
+
+\begin{Verbatim} 
+sudo apt-get install freeglut3
+sudo apt-get install freeglut3-dev
+sudo apt-get install binutils-gold
+sudo apt-get install mesa-common-dev
+sudo apt-get install libglew1.5-dev libglm-dev
+\end{Verbatim}
+
+\section{OpenAL}
+
+Instalace vývojových balíčků pro knihovnu OpenAl je velmi jednoduchá, prakticky nikdy se nestalo že by něco nefungovalo. V Ubuntu jsou to standardní balíčky:
+
+\begin{Verbatim} 
+sudo apt-get install libopenal-dev
+sudo apt-get install libalut-dev
+\end{Verbatim}
+
+\section{OpenCL}
+
+Tak jako \emph{OpenGL} i \emph{OpenCL} je poskytována výrobcem grafického čipu. Je tedy nutné 
+mít dobře nainstalovanou grafickou kartu s proprietárními ovladači.
+
+Ve standardních repozitářích Ubuntu je následující balíček...
+
+\begin{Verbatim} 
+sudo apt-get install ocl-icd-libopencl1,
+\end{Verbatim}
+
+ten nainstaluje nějakou \emph{OpenC}L knihovnu. Program potom jde spustit, ale inicializace vrátí chybu, není platforma, takže není možno provádět výpočet ani softwarově.
+
+
+SDK pro \emph{OpenCL} na grafických čipech \emph{AMD} je možno stáhnout z adresy \href{http://developer.amd.com/tools-and-sdks/opencl-zone/amd-accelerated-parallel-processing-app-sdk/}{developer.amd.com} a je rovněž na přiloženém CD nosiči. Instalace je bez problémů.
+Jediné co potom musíte udělat, je nastavení cesty ke hlavičkovému souboru a knihovně v případě, že chcete použít její vývojovou verzi. U mně to bylo například:\\
+\emph{/opt/AMDAPPSDK-2.9-1/include}.
+
+
+SDK pro \emph{OpenCL} na grafických čipech \emph{NVidia} je v Ubuntu ve standardních repozitářích a
+je spojena s implementací knihovny \emph{CUDA}. Pro instalaci stačí napsat:
+
+\begin{Verbatim} 
+sudo apt-get install libcuda1-375
+sudo apt-get install nvidia-cuda-dev
+\end{Verbatim}
+kde 375 je jméno verze ovladače grafického čipu NVidia.

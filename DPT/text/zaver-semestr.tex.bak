@@ -1,0 +1,4 @@
+\chapter{Závěr}
+
+V kapitole \uv{Možnosti paralelizace} (\ref{kap:moznostireseni}) jsou uvedeny tři hlavní směry, kterými by se měla diplomová práce ubírat. Prvně bylo ukázáno, že výpočet se dá za cenu mírného zesložitění rozdělit na více procesorových jednotek a 
+následně mezivýsledky spojovat. Dále je v téže kapitole ukázáno, jak využít možnost maticových operací (\ref{kap:matrixoperations}), které nabízejí dnešní grafické čipy. Jako poslední směr je uvedena možnost počítání několika kmitočtů současně (\ref{kap:multifrequency}). V textu je několik otázek, na které lze odpovědět pouze provedením nějakého testu. Například, zda počítání s maticemi velikosti $4\cdot 4$ skutečně urychlí výpočet oproti popsané skalární variantě (\ref{kap:matrixoperations}). %Dalším testem je ověřit, zda je vhodné počítat součin dvou matic $4\cdot 4$ a následně %funkci $diag$, nebo součet dvou součinů matic $4\cdot 1$.

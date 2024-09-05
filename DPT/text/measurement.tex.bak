@@ -1,0 +1,177 @@
+\chapter{Měření přínosu využití grafického čipu}
+\label{kap:measurement}
+
+Aby bylo možno nějakým způsobem prověřit funkčnost programu, jsou do něj přidány některé měřící funkce.
+
+\section{Počet využívaných jader}
+
+První informace která je obecně zajímavá, je kolik jader \emph{GPU} potřebuji, kolik jich mám k dispozici a kolik jsem chopen jich reálně využít. Proto je na liště nástrojů programu \emph{Sound Analyzer} sedm údajů: Globální $N/C/M$, lokální $N/C/M$ a maximální počet jader současně spustitelných. Více o počtu jader najdete v manuálu, sekci \emph{Počet jader použitých při výpočtech} \ref{sec:nkernels}.
+
+\section{Průměrná délka výpočtu za poslední dobu}
+
+Program měří čas každého provedení výpočtu v mikrosekundách. Využívá přitom komponentu \emph{Stats}, které implementuje frontu 250 hodnot. Z těchto 250 hodnot je počítán aritmetický průměr.
+
+
+\section{Metodika měření}
+
+Abychom změřili uspořený čas \emph{CPU}, bylo by dobré nejdříve provést měření které nezatěžuje \emph{GPU}, tedy nějaký jednoduchý výpočet. Potom provedu měření zatížení všech jader, ale tak, aby globální počet jader se rovnal lokálnímu počtu jader, tedy jeden výpočetní cyklus. Jako třetí měření zatížím \emph{GPU} tak, abych maximálně využil paměť. Při velkých požadavcích \emph{OpenCL} jednoduše vrátí chybu.
+
+
+Při všech těchto měřeních by bylo jistě zajímavé vědět, jak je zatížen počítač jako takový. Ideální na to je program \emph{mstats} z balíku \emph{sysstat}. Budu počítat zatížení procesoru za periodu 10s.
+
+
+Ještě připomenu, že v programu \emph{Sound Analyzer} se délkou segmentu myslí délka, kterou \emph{recorder} načte ze vstupního zařízení. K se přičítá $overlap$ vzorků z předchozích segmentů.
+
+
+\section{Použité počítače}
+
+\subsection{PC1}
+
+\begin{table}[htbp]
+\centering
+\caption{Parametry testovacího počítače}
+\begin{tabular}{|l|l|}
+\hline
+Operační systém&Linux Mint 17.3 64bit\\
+CPU model&AMD FX-8350\\
+CPU jader&8\\
+CPU kmitočet& 4000MHz\\
+Paměť& 32GB\\
+Chipset&AMD 990FX\\
+GPU model&AMD Radeon HD7850\\
+GPU paměť&2GB\\
+GPU jader&1200\\
+GPU kmitočet& 1000MHz\\
+\hline 
+\end{tabular}
+\end{table}
+
+\subsection{Notebook1}
+
+
+\begin{table}[htbp]
+\centering
+\caption{Parametry testovacího notebooku}
+\begin{tabular}{|l|l|}
+\hline
+Operační systém&Linux Mint 18.1 64bit\\
+CPU model&Intel i7-4850HQ\\
+CPU jader&4 (8 vláken)\\
+CPU kmitočet& 2300MHz\\
+Paměť& 16GB\\
+Chipset&-\\
+GPU model&NVidia GeForce GT 750M Mac edition / Intel IRIS 5200\\
+GPU paměť&2GB / 128MB\\
+GPU jader&384 /-\\
+GPU kmitočet& 926MHz/-\\
+\hline 
+\end{tabular}
+\end{table}
+
+\subsection{Další podmínky měření}
+
+$f_{vz} = 8000Hz$ \\
+Na počítačích byl spuštěn pouze program \emph{Sound Analyzer} a terminál s programem \emph{mstats}.
+
+\section{Naměřené hodnoty}
+
+\subsection{PC1}
+
+\begin{table}[htbp]
+\centering
+\caption{Naměžené hodnoty pro pro testovací počítač}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+Kmit. & Segm. & Over- & Globální & Lokální & CPU & CPU & GPU & GPU\\
+počet & délka & lap & NDRange & NDRange & doba & využití & doba & využití\\
+$\left[ - \right]$ & $\left[ - \right]$ & $\left[ - \right]$ &$\left[ -/-/- \right]$ & $\left[ -/-/- \right]$ & $\left[ \mu s\right]$ & $\left[ \% \right]$ & $\left[ \mu s \right]$ & $\left[ \% \right]$\\
+\hline
+0&0&0&0/0/0&0/0/0&-&4,83&-&-\\
+1&4&0&1/1/1&1/1/1&105&6,54&160&7,13\\
+1&512&15872&1/1/64&1/1/64&230&5,3&410&5,0\\
+16384&4&0&16384/1/1&1024/1/1&300&24,4&-&-\\
+16384&512&15872&16384/1/64&16/1/64&61090&82,64&-&-\\
+64&512&15872&64/1/64&16/1/64&690&5,25&-&-\\
+64&512&15872&64/1/64&4/1/64&-&-&430&5,20\\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{PC1 - měření využití jader}
+
+
+\begin{table}[htbp]
+\centering
+\label{tab:pc1mvj}
+\caption{Naměřené hodnoty pro měření využití jader pro testovací počítač}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+Lokální & \multicolumn{9}{c|}{Globální počet jader $\left[ \mu s\right]$}\\
+počet & 1 & 2&4&8&16&32&64&128&256\\
+jader & &&&&&&&& \\
+$\left[ \mu s\right]$ &&&&&&&&&\\
+\hline
+1&154&-&-&-&-&-&-&-&-\\
+2&154&154&-&-&-&-&-&-&-\\
+4&154&154&154&-&-&-&-&-&-\\
+8&155&155&155&155&-&-&-&-&-\\
+16&155&155&155&155&155&-&-&-&-\\
+32&156&156&156&156&156&156&-&-&-\\
+64&157&157&157&157&157&157&157&-&-\\
+128&157&157&157&157&157&157&157&157&-\\
+256&158&158&158&158&158&158&158&158&158\\
+\hline
+\end{tabular}
+\end{table}
+
+
+\subsection{Notebook1}
+\begin{table}[!h]
+\centering
+\caption{Naměžené hodnoty pro pro testovací notebook}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+Kmit. & Segm. & Over- & Globální & Lokální & CPU & CPU & GPU & GPU\\
+počet & délka & lap & NDRange & NDRange & doba & využití & doba & využití\\
+$\left[ - \right]$ & $\left[ - \right]$ & $\left[ - \right]$ &$\left[ -/-/- \right]$ & $\left[ -/-/- \right]$ & $\left[ \mu s\right]$ & $\left[ \% \right]$ & $\left[ \mu s \right]$ & $\left[ \% \right]$\\
+\hline
+0&0&0&0/0/0&0/0/0&-&4,11&-&-\\
+1&4&0&1/1/1&1/1/1&-&-&105&6,41\\
+1&512&15872&1/1/64&1/1/64&-&-&610&4,50\\
+16384&4&0&16384/1/1&1024/1/1&-&-&190&8,85\\
+16384&512&15872&16384/1/64&16/1/64&-&-&161410&10,12\\
+64&512&15872&64/1/64&16/1/64&-&-&1265&4,62\\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Shrnutí}
+
+Prvně je třeba vysvětlit nenaměřené hodnoty. U \emph{NVidie} vrátí inicializační funkce chybu vždy, když se pokusíme použít výpočet procesorem. U \emph{AMD} je nějaký limit na paměť okolo 4000 jader, po jeho překročení \emph{OpenCL} vrátí chybu \uv{Failed to execute kernel! (2) err=0xfffffffb}, což znamená \uv{Nemohu naalokovat paměť}.
+
+
+Z prvních řádků obou měření je vidět, kolik času zabírá hlavní smyčka programu, která po cca 100ms překresluje okno. Lehce silnějším se zdá být procesor \emph{i7}.
+
+Poté jsem spustil jedno jediné jádro a vidím, že požadavky na \emph{CPU} vzrostly asi dvojnásobně, protože počítáme cca 2000krát za jednu sekundu. Je též patrné, že
+funkční volání, které spouští \emph{OpenCL}, trvá asi 105$\mu s$ na \emph{NVidii} a~160$\mu s$ na \emph{AMD}. Pod tyto časy už se zřejmě nepůjde dostat.
+
+Pak se dá zkusit počítat jednu dlouhou řadu s 64 mezivýsledky, tedy s~využitím 64 jader. Jak patrno, potřebný výkon \emph{CPU} značně klesl, protože počítáme s~nižším obnovovacím kmitočtem, asi jen 15,6 Hz, oproti 2000Hz v případě předchozím. U~\emph{AMD} to zvedlo potřebu \emph{CPU} o pouhých 0,17\% a doba strávená výpočtem je větší asi jen čtyřnásobně. U \emph{NVidie} stoupla potřeba \emph{CPU} o 0,39\% a výpočet je delší méně než šestinásobně.
+
+
+Ještě se podívejme na poslední řádky tabulek naměřených hodnot. Zde počítáme hodnoty pro 64 kmitočtů a 16384 vzorků dlouhé řady. Zatížení \emph{CPU} je pro oba grafické čipy minimálních 0,39\%. Grafický desktopový čip \emph{AMD} je ale výrazně rychlejší než mobilní \emph{NVidie}. Z předposledního řádku první tabulky je vidět, že počítání CPU je asi o polovinu pomalejší.
+
+
+Nakonec jsem ještě změřil, jak moc pomáhá grafický čip procesoru. Měřil jsem tak, že jsem upravil program \emph{SoundAnalyzer} na možnost ovlivnění počtu lokálních jader.
+Zastavil jsem $1,2,4,8,16,32,64,128~a~256$ jader jako požadavek (globální) tak jako lokální. Výsledek je celkem překvapující a je v tabulce \ref{tab:pc1mvj}. Ať jsem nastavil jakýkoli počet jader, doba strávená výpočtem byla vždy $154~až~158 \mu s$, tedy jen lehce úměrná počtu spouštěných výpočetních jednotek. Knihovna \emph{OpenCL} tedy nebere parametr $lokální NDRange$ jako počet procesorů, které chceme použít, ale použije vždy veškeré možné. Čím více mezivýsledků sčítám, tím je provádění delší, ačkoliv ten rozdíl na 256ti výpočetních jednotkách byl pouze $4 \mu s$. Protože ale není možné spustit pouze jedno jádro, nejsem schopen s přesností porovnat pararelní a seriový přístup. Navíc doba provádění je tak malá, že ji lze jen těžko měřit prostředky PC. Navíc tato doba hodně kolísá díky tomu, že v počítači běží řada různých procesů. Přes to lze říci, že paralelizace se vyplatila. Výpočet 256krát delší zátěže trvá jen o~cca 0,25\% déle.
+
+
+Závěrem sekce ještě uvedu srovnání počtu jader ve vztahu k předpokladům daných hardwarem. Ačkoli \emph{GPU AMD} má 1200 jader, \emph{OpenCL} nabízela k použití vždy jen 256 jader. Na proti tomu 384jádrová \emph{NVidia} nabízela k výpočtu vždy 1024 jader. Softwarové zpracování poskytovala pouze \emph{GPU AMD} a nabízela vždy 1024 jader.
+
+\section{Závěr měření}
+
+Z výsledků je patrné, že využití {GPU} ke zpracování signálu skutečně může výrazně odlehčit hlavnímu procesoru. Je ale třeba brát v úvahu několik předpokladů. Zatížení \emph{GPU} nesmí být nesmyslně malé. Je tu totiž velká režie s voláním \emph{OpenCL} funkcí a~jednoduše se to nemusí vyplatit. Zejména mám na mysli počítat v každé výpočetní jednotce dostatečně dlouhý blok signálu. Rozdělení segmentu signálu na bloky se tedy vyplatí jen u segmentů delších něž cca 2048 vzorků.
+
+
+ Je to patrné z prvních řádků tabulek, kde přenesení výpočtu na\emph{CPU} výpočet výrazně urychluje.
+
+Aplikace by také měla být vícevláknová s jedním vyhrazeným vláknem pro výpočet na \emph{GPU}, zejména pro případ realtimeové aplikace.

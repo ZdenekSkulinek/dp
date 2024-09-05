@@ -1,0 +1,24 @@
+function [r]= fftd( d )
+
+t = cputime;
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+r=fft(d);
+t=(cputime - t) /20
